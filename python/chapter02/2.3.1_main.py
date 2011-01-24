@@ -11,17 +11,11 @@ inversed_ed = 1/(1+sqrt(pow(5-4,2)+pow(4-1,2)))
 print inversed_ed
 
 import recommendations
+
 sim_distance_result = recommendations.sim_distance(
   recommendations.critics, 
   'Lisa Rose', 
   'Gene Seymour'
 )
 print sim_distance_result
-
-sim_pearson_result = recommendations.sim_pearson(
-  recommendations.critics, 
-  'Lisa Rose', 
-  'Gene Seymour'
-)
-print sim_pearson_result
 
