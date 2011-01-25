@@ -73,5 +73,34 @@ def top_matches(prefs,person,n=5,similarity_func=sim_pearson):
   scores.reverse()
   return scores[0:n]
  
+# ---
+# Chapter 2.4 Recommendation
+# ---
+def get_recommendations(prefs,person,similarity_func=sim_pearson):
+  totals = {}
+  score_sums = {}
+  for other in prefs:
+    # skip self
+    if other == person:
+      continue
+    # get sim score
+    score = similarity_func(prefs,person,other)
+    # skip minus value
+    if score <= 0:
+      continue
+    # check values judged by other
+    for item in prefs[other]:
+      if item not in prefs[person] or prefs[person][item] == 0:
+        totals.setdefault(item,0)
+        totals[item] += prefs[other][item]*score
+        score_sums.setdefault(item,0)
+        score_sums[item] += score
+    # calculate rankings
+  rankings = [ 
+    (total/score_sums[item],item) for item,total in totals.items() 
+  ]
+  rankings.sort()
+  rankings.reverse()
+  return rankings
 
-
+ 
