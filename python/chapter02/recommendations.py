@@ -61,3 +61,17 @@ def sim_pearson(prefs,p1,p2):
   return num/den
 
 
+# ---
+# Chapter 2.3.4 Similarity top matches
+# ---
+def top_matches(prefs,person,n=5,similarity_func=sim_pearson):
+  scores = [ 
+    (similarity_func(prefs,person,other),other)
+      for other in prefs if other != person 
+  ]
+  scores.sort()
+  scores.reverse()
+  return scores[0:n]
+ 
+
+
