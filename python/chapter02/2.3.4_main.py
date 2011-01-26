@@ -2,10 +2,10 @@
 
 import recommendations
 
-top_matches_result = recommendations.top_matches(
+result = recommendations.get_similar_persons(
   recommendations.critics, 
   'Toby', 
   n = 3
 )
-print top_matches_result
+print result
 

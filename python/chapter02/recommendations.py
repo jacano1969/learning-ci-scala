@@ -16,91 +16,86 @@ from math import sqrt
 # Chapter 2.3.1 Euclidean distance
 # ---
 def sim_distance(prefs,person1,person2):
-  # get items judged by both of person1 and person2
-  si = {}
-  for item in prefs[person1]:
-    if item in prefs[person2]:
-      si[item] = 1
-  # not found
-  if len(si) == 0: 
+  both_contains = {}
+  for title in prefs[person1]:
+    if title in prefs[person2]:
+      both_contains[title] = 1
+  if len(both_contains) == 0: 
     return 0
-  # sum all square root of items
-  sum_of_squares = sum(
-    [ 
-      pow(prefs[person1][item]-prefs[person2][item],2) 
-        for item in prefs[person1] if item in prefs[person2] 
-    ]
-  )
-  return 1/(1+sum_of_squares)
+  sum_of_values = sum([ 
+    pow(prefs[person1][title]-prefs[person2][title],2) 
+      for title in prefs[person1] if title in prefs[person2] 
+  ])
+  return 1/(1+sum_of_values)
 
 # ---
 # Chapter 2.3.2 Pearson correlation coefficient
 # ---
 def sim_pearson(prefs,p1,p2):
-  # get items judged by both
-  si = {}
-  for item in prefs[p1]:
-    if item in prefs[p2]: 
-      si[item] = 1
-  n = len(si)
-  # not found
-  if n == 0:
+  # get titles judged by both
+  both_contains = {}
+  for title in prefs[p1]:
+    if title in prefs[p2]: 
+      both_contains[title] = 1
+  both_contains_len = len(both_contains)
+  if both_contains_len == 0: 
     return 0
-  # sum all
-  sum1 = sum([prefs[p1][it] for it in si])
-  sum2 = sum([prefs[p2][it] for it in si])
-  # sum all square root
-  sum1sq = sum([pow(prefs[p1][it],2) for it in si])
-  sum2sq = sum([pow(prefs[p2][it],2) for it in si])
-  # sum products
-  sum_products = sum([prefs[p1][it] * prefs[p2][it] for it in si])
-  num = sum_products - (sum1*sum2/n)
-  den = sqrt((sum1sq-pow(sum1,2)/n)*(sum2sq-pow(sum2,2)/n))
-  if den == 0:
+  sum_of_p1 = sum([prefs[p1][title] for title in both_contains])
+  sum_of_p2 = sum([prefs[p2][title] for title in both_contains])
+  sum_of_pow_p1 = sum([
+    pow(prefs[p1][title],2) for title in both_contains
+  ])
+  sum_of_pow_p2 = sum([
+    pow(prefs[p2][title],2) for title in both_contains
+  ])
+  sum_products = sum([
+    prefs[p1][title]*prefs[p2][title] for title in both_contains
+  ])
+  numerator = sum_products - sum_of_p1*sum_of_p2/both_contains_len
+  denominator = sqrt(
+    (sum_of_pow_p1-pow(sum_of_p1,2))*(sum_of_pow_p2-pow(sum_of_p2,2))
+    /both_contains_len
+  )
+  if denominator == 0: 
     return 0
-  return num/den
-
+  return numerator/denominator
 
 # ---
 # Chapter 2.3.4 Similarity top matches
 # ---
-def top_matches(prefs,person,n=5,similarity_func=sim_pearson):
-  scores = [ 
-    (similarity_func(prefs,person,other),other)
+def get_similar_persons(prefs,person,n=5,sim_func=sim_pearson):
+  sim_and_person_tuples = [ 
+    (sim_func(prefs,person,other),other)
       for other in prefs if other != person 
   ]
-  scores.sort()
-  scores.reverse()
-  return scores[0:n]
+  sim_and_person_tuples.sort()
+  sim_and_person_tuples.reverse()
+  return sim_and_person_tuples[0:n]
  
 # ---
 # Chapter 2.4 Recommendation
 # ---
-def get_recommendations(prefs,person,similarity_func=sim_pearson):
-  totals = {}
-  score_sums = {}
+def get_recommendations(prefs,person,sim_func=sim_pearson):
+  weighted_critics = {}
+  sums_of_similarity = {}
   for other in prefs:
-    # skip self
-    if other == person:
+    if other == person: 
       continue
-    # get sim score
-    score = similarity_func(prefs,person,other)
-    # skip minus value
-    if score <= 0:
+    similarity = sim_func(prefs,person,other)
+    if similarity <= 0: 
       continue
-    # check values judged by other
-    for item in prefs[other]:
-      if item not in prefs[person] or prefs[person][item] == 0:
-        totals.setdefault(item,0)
-        totals[item] += prefs[other][item]*score
-        score_sums.setdefault(item,0)
-        score_sums[item] += score
-  # calculate rankings
-  rankings = [ 
-    (total/score_sums[item],item) for item,total in totals.items() 
+    for title in prefs[other]:
+      if title not in prefs[person] or prefs[person][title] == 0:
+        weighted_critics.setdefault(title,0)
+        weighted_critics[title] += prefs[other][title]*similarity
+        sums_of_similarity.setdefault(title,0)
+        sums_of_similarity[title] += similarity
+  sim_and_title_tuples = [ 
+    (weighted_critic/sums_of_similarity[title],title) 
+      for title,weighted_critic in weighted_critics.items() 
   ]
-  rankings.sort()
-  rankings.reverse()
-  return rankings
+  sim_and_title_tuples.sort()
+  sim_and_title_tuples.reverse()
+  return sim_and_title_tuples
 
  
