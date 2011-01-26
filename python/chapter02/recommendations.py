@@ -1,13 +1,27 @@
 #!/usr/bin/python
 
+LadyInTheWater = 'Lady in the Water'
+SnakesOnAPlane = 'Snakes on a Plane'
+JustMyLuck = 'Just My Luck'
+SupermanReturns = 'Superman Returns'
+YouMeAndDupree = 'You, Me and Dupree'
+TheNightListener = 'The Night Listener'
+
 critics = {
-    'Lisa Rose'        : {'Lady in the Water':2.5, 'Snakes on a Plane':3.5, 'Just My Luck':3.0, 'Superman Returns':3.5, 'You, Me and Dupree':2.5, 'The Night Listener':3.0},
-    'Gene Seymour'     : {'Lady in the Water':3.0, 'Snakes on a Plane':3.5, 'Just My Luck':1.5, 'Superman Returns':5.0, 'You, Me and Dupree':3.5, 'The Night Listener':3.0},
-    'Michael Phillips' : {'Lady in the Water':2.5, 'Snakes on a Plane':3.0,                     'Superman Returns':3.5,                           'The Night Listener':3.5},
-    'Claudia Puig'     : {                         'Snakes on a Plane':3.5, 'Just My Luck':3.0, 'Superman Returns':4.0, 'You, Me and Dupree':2.5, 'The Night Listener':4.5},
-    'Mick LaSalle'     : {'Lady in the Water':3.0, 'Snakes on a Plane':4.0, 'Just My Luck':2.0, 'Superman Returns':3.0, 'You, Me and Dupree':2.0, 'The Night Listener':3.0},
-    'Jack Matthews'    : {'Lady in the Water':3.0, 'Snakes on a Plane':4.0,                     'Superman Returns':5.0, 'You, Me and Dupree':3.5, 'The Night Listener':3.0},
-    'Toby'             : {                         'Snakes on a Plane':4.5,                     'Superman Returns':4.0, 'You, Me and Dupree':1.0,                         },
+  'Lisa Rose'        : 
+    {LadyInTheWater:2.5, SnakesOnAPlane:3.5, JustMyLuck:3.0, SupermanReturns:3.5, YouMeAndDupree:2.5, TheNightListener:3.0},
+  'Gene Seymour'     : 
+    {LadyInTheWater:3.0, SnakesOnAPlane:3.5, JustMyLuck:1.5, SupermanReturns:5.0, YouMeAndDupree:3.5, TheNightListener:3.0},
+  'Michael Phillips' : 
+    {LadyInTheWater:2.5, SnakesOnAPlane:3.0,                 SupermanReturns:3.5,                     TheNightListener:3.5},
+  'Claudia Puig'     : 
+    {                    SnakesOnAPlane:3.5, JustMyLuck:3.0, SupermanReturns:4.0, YouMeAndDupree:2.5, TheNightListener:4.5},
+  'Mick LaSalle'     : 
+    {LadyInTheWater:3.0, SnakesOnAPlane:4.0, JustMyLuck:2.0, SupermanReturns:3.0, YouMeAndDupree:2.0, TheNightListener:3.0},
+  'Jack Matthews'    : 
+    {LadyInTheWater:3.0, SnakesOnAPlane:4.0,                 SupermanReturns:5.0, YouMeAndDupree:3.5, TheNightListener:3.0},
+  'Toby'             : 
+    {                    SnakesOnAPlane:4.5,                 SupermanReturns:4.0, YouMeAndDupree:1.0,                     },
 }
 
 from math import sqrt
@@ -23,10 +37,10 @@ def sim_distance(prefs,person1,person2):
   if len(both_contains) == 0: 
     return 0
   sum_of_values = sum([ 
-    pow(prefs[person1][title]-prefs[person2][title],2) 
+    pow(prefs[person1][title] - prefs[person2][title],2) 
       for title in prefs[person1] if title in prefs[person2] 
   ])
-  return 1/(1+sum_of_values)
+  return 1 / (1 + sum_of_values)
 
 # ---
 # Chapter 2.3.2 Pearson correlation coefficient
@@ -49,28 +63,27 @@ def sim_pearson(prefs,p1,p2):
     pow(prefs[p2][title],2) for title in both_contains
   ])
   sum_products = sum([
-    prefs[p1][title]*prefs[p2][title] for title in both_contains
+    prefs[p1][title] * prefs[p2][title] for title in both_contains
   ])
-  numerator = sum_products - sum_of_p1*sum_of_p2/both_contains_len
+  numerator = sum_products - sum_of_p1 * sum_of_p2 / both_contains_len
   denominator = sqrt(
-    (sum_of_pow_p1-pow(sum_of_p1,2))*(sum_of_pow_p2-pow(sum_of_p2,2))
-    /both_contains_len
+    (sum_of_pow_p1 - pow(sum_of_p1,2)) * (sum_of_pow_p2 - pow(sum_of_p2,2)) / both_contains_len
   )
   if denominator == 0: 
     return 0
-  return numerator/denominator
+  return numerator / denominator
 
 # ---
 # Chapter 2.3.4 Similarity top matches
 # ---
-def get_similar_persons(prefs,person,n=5,sim_func=sim_pearson):
+def get_similar_persons(prefs,person,max_count=5,sim_func=sim_pearson):
   sim_and_person_tuples = [ 
     (sim_func(prefs,person,other),other)
       for other in prefs if other != person 
   ]
   sim_and_person_tuples.sort()
   sim_and_person_tuples.reverse()
-  return sim_and_person_tuples[0:n]
+  return sim_and_person_tuples[0:max_count]
  
 # ---
 # Chapter 2.4 Recommendation
@@ -87,7 +100,7 @@ def get_recommendations(prefs,person,sim_func=sim_pearson):
     for title in prefs[other]:
       if title not in prefs[person] or prefs[person][title] == 0:
         weighted_critics.setdefault(title,0)
-        weighted_critics[title] += prefs[other][title]*similarity
+        weighted_critics[title] += prefs[other][title] * similarity
         sums_of_similarity.setdefault(title,0)
         sums_of_similarity[title] += similarity
   sim_and_title_tuples = [ 
