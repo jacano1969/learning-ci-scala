@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class EuclideanDisntanceRecommendar extends AbstractRecommendar implements Recommender {
+public class EuclideanDistanceRecommendar extends AbstractRecommendar implements Recommender {
 
     public Double getSimilarity(Person person1, Person person2) {
         Map<String, Double> critics1 = critics.get(person1.name);
