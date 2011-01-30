@@ -3,6 +3,11 @@
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
   </component>
+  <component name="BSFConsole">
+    <option name="searchOptions">
+      <BSFConsoleSearchOptions />
+    </option>
+  </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <resourceExtensions />
@@ -187,15 +192,15 @@
     <mapping directory="" vcs="" />
   </component>
   <component name="libraryTable">
-    <library name="Maven: junit:junit:4.4">
+    <library name="Maven: junit:junit:4.8.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.4/junit-4.4.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.2/junit-4.8.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.4/junit-4.4-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.2/junit-4.8.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.4/junit-4.4-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.8.2/junit-4.8.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.hamcrest:hamcrest-core:1.1">
@@ -261,15 +266,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/scalacheck/scalacheck/1.2/scalacheck-1.2-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.scalatest:scalatest:0.9.1">
+    <library name="Maven: org.scalatest:scalatest:1.2">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest/0.9.1/scalatest-0.9.1.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest/1.2/scalatest-1.2.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest/0.9.1/scalatest-0.9.1-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest/1.2/scalatest-1.2-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest/0.9.1/scalatest-0.9.1-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/scalatest/scalatest/1.2/scalatest-1.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.specs:specs:1.2.5">
