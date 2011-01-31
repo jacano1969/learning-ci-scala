@@ -10,55 +10,64 @@ trait Recommender {
   def getSimilarPersons(critics: Map[String, Map[String, Double]],
                         self: Person,
                         maxCount: Int): List[Tuple2[Person, Double]] = {
-    val dest = new ListBuffer[Tuple2[Person, Double]]()
-    critics.foreach({
+    val buffer = new ListBuffer[Tuple2[Person, Double]]()
+    critics foreach {
       case (name, criticsByPerson) => {
         if (name != self.name) {
-          val similarity = getSimilarity(critics, self, new Person(name))
-          dest.append((new Person(name), similarity))
+          buffer.append((new Person(name), getSimilarity(critics, self, new Person(name))))
         }
       }
-    })
-    dest.toList.sortWith(_._2 > _._2).slice(0, maxCount)
+    }
+    buffer.toList.sortWith(_._2 > _._2).slice(0, maxCount)
   }
 
   def getRecommendations(critics: Map[String, Map[String, Double]],
                          self: Person): List[Tuple2[String, Double]] = {
     val weightedCritics = new HashMap[String, Double]()
     val sumsOfSimilarity = new HashMap[String, Double]()
-    val criticsBySelf = critics.get(self.name).get
-    critics.foreach({
+    critics foreach {
       case (name, criticsByOther) => {
         if (name != self.name) {
           val similarity = getSimilarity(critics, self, new Person(name))
           if (similarity > 0) {
-            criticsByOther.foreach({
+            criticsByOther foreach {
               case (title, rating) => {
-                if (criticsBySelf.get(title) == None && criticsByOther.get(title) != None) {
-                  if (!weightedCritics.get(title).isDefined) {
-                    weightedCritics.put(title, 0.0D)
+                critics.get(self.name) match {
+                  case Some(criticsBySelf) => {
+                    criticsBySelf.get(title) match {
+                      case Some(v) =>
+                      case None => {
+                        criticsByOther.get(title) match {
+                          case Some(valueByOther) => {
+                            weightedCritics.update(title, weightedCritics.getOrElse(title, 0.0D) + valueByOther * similarity)
+                            sumsOfSimilarity.update(title, sumsOfSimilarity.getOrElse(title, 0.0D) + similarity)
+                          }
+                          case None =>
+                        }
+                      }
+                    }
                   }
-                  weightedCritics.put(title,
-                    weightedCritics.get(title).get + criticsByOther.get(title).get * similarity)
-                  if (!sumsOfSimilarity.get(title).isDefined) {
-                    sumsOfSimilarity.put(title, 0.0D)
-                  }
-                  sumsOfSimilarity.put(title, sumsOfSimilarity.get(title).get + similarity)
+                  case None =>
                 }
               }
-            })
+            }
           }
         }
       }
-    })
-    val dest = new ListBuffer[Tuple2[String, Double]]()
-    weightedCritics.foreach({
-      case (title, value) => {
-        val element = (title, weightedCritics.get(title).get / sumsOfSimilarity.get(title).get)
-        dest.append(element)
+    }
+    val buffer = new ListBuffer[Tuple2[String, Double]]()
+    weightedCritics foreach {
+      case (title, weighted) => {
+        sumsOfSimilarity.get(title) match {
+          case Some(sum) => {
+            val element = (title, weighted / sum)
+            buffer.append(element)
+          }
+          case None =>
+        }
       }
-    })
-    dest.toList.sortWith(_._2 > _._2)
+    }
+    buffer.toList.sortWith(_._2 > _._2)
   }
 
 }
