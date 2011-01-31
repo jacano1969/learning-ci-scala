@@ -1,34 +1,31 @@
 package learningci.chapter02
 
-import collection.mutable.HashSet
-
 class EuclideanDistanceRecommender extends Recommender {
 
-  override def getSimilarity(critics: Map[String, Map[String, Double]],
+  override def getSimilarity(critics: List[Critic],
                              p1: Person,
                              p2: Person): Double = {
-    var sumOfValues: Double = 0.0D
-    critics.get(p1.name) match {
-      case Some(critics1) => {
-        critics1 foreach {
-          case (title, rating1) => {
-            critics.get(p2.name) match {
-              case Some(critics2) => {
-                critics2.get(title) match {
-                  case Some(rating2) => {
-                    sumOfValues += math.pow(rating1 - rating2, 2)
-                  }
-                  case None =>
-                }
-              }
-              case None =>
-            }
-          }
+
+    val criticsByPerson1 = critics filter {
+      case Critic(person, title, rating) => person == p1
+    }
+    val criticsByPerson2 = critics filter {
+      case Critic(person, title, rating) => person == p2
+    }
+
+    val sumOfValues = criticsByPerson2 map {
+      case Critic(person2, title2, rating2) => {
+        val bothContains = criticsByPerson1 filter {
+          case Critic(person1, title1, rating1) => title1 == title2
+        }
+        bothContains.size match {
+          case 1 => math.pow(bothContains.head.rating - rating2, 2)
+          case _ => 0.0D
         }
       }
-      case None =>
     }
-    1 / (1 + sumOfValues)
+    1 / (1 + sumOfValues.sum)
+
   }
 
 }

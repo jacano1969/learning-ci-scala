@@ -1,73 +1,88 @@
 package learningci.chapter02
 
-import collection.mutable.ListBuffer
-import collection.mutable.HashMap
+import collection.mutable.{ListBuffer, HashMap}
 
 trait Recommender {
 
-  def getSimilarity(critics: Map[String, Map[String, Double]], p1: Person, p2: Person): Double
+  def getSimilarity(critics: List[Critic],
+                    p1: Person,
+                    p2: Person): Double
 
-  def getSimilarPersons(critics: Map[String, Map[String, Double]],
+  def getSimilarPersons(critics: List[Critic],
                         self: Person,
                         maxCount: Int): List[Tuple2[Person, Double]] = {
-    val buffer = new ListBuffer[Tuple2[Person, Double]]()
-    critics foreach {
-      case (name, criticsByPerson) => {
-        if (name != self.name) {
-          buffer.append((new Person(name), getSimilarity(critics, self, new Person(name))))
-        }
+
+    val persons = critics map {
+      case Critic(person, title, rating) => person
+    } distinct
+
+    persons filter {
+      person => person != self
+    } map {
+      case person => {
+        (person, getSimilarity(critics, self, person))
       }
-    }
-    buffer.toList.sortWith(_._2 > _._2).slice(0, maxCount)
+    } sortWith (_._2 > _._2) slice (0, maxCount)
+
   }
 
-  def getRecommendations(critics: Map[String, Map[String, Double]],
+  def getRecommendations(critics: List[Critic],
                          self: Person): List[Tuple2[String, Double]] = {
+
+    val persons = critics map {
+      case Critic(person, title, rating) => person
+    } distinct
+
+    val similarPersons: List[Tuple2[Person, Double]] = persons filter {
+      case person => person != self
+    } map {
+      case person => {
+        (person, getSimilarity(critics, self, person))
+      }
+    }
+
+    val criticsBySelf = critics filter {
+      case Critic(person, title, rating) => person == self
+    }
+
     val weightedCritics = new HashMap[String, Double]()
     val sumsOfSimilarity = new HashMap[String, Double]()
+
     critics foreach {
-      case (name, criticsByOther) => {
-        if (name != self.name) {
-          val similarity = getSimilarity(critics, self, new Person(name))
-          if (similarity > 0) {
-            criticsByOther foreach {
-              case (title, rating) => {
-                critics.get(self.name) match {
-                  case Some(criticsBySelf) => {
-                    criticsBySelf.get(title) match {
-                      case Some(v) =>
-                      case None => {
-                        criticsByOther.get(title) match {
-                          case Some(valueByOther) => {
-                            weightedCritics.update(title, weightedCritics.getOrElse(title, 0.0D) + valueByOther * similarity)
-                            sumsOfSimilarity.update(title, sumsOfSimilarity.getOrElse(title, 0.0D) + similarity)
-                          }
-                          case None =>
-                        }
-                      }
-                    }
-                  }
-                  case None =>
-                }
-              }
+      case Critic(person, title, rating) => {
+        criticsBySelf filter {
+          case Critic(p, t, r) => t == title
+        } size match {
+          case 0 => {
+            val similar = similarPersons filter {
+              case (p, similarity) => p.name == person.name
             }
+            val similarity = similar.head._2
+            weightedCritics.update(title,
+              weightedCritics.getOrElse(title, 0.0D) + rating * similarity)
+            sumsOfSimilarity.update(title,
+              sumsOfSimilarity.getOrElse(title, 0.0D) + similarity)
           }
+          case _ =>
         }
       }
     }
-    val buffer = new ListBuffer[Tuple2[String, Double]]()
-    weightedCritics foreach {
-      case (title, weighted) => {
+
+    var buffer = new ListBuffer[Tuple2[String, Double]]
+    weightedCritics map {
+      case (title, weightedValue) => {
         sumsOfSimilarity.get(title) match {
-          case Some(sum) => {
-            val element = (title, weighted / sum)
-            buffer.append(element)
+          case Some(denominator) => {
+            buffer.append((title, weightedValue / denominator))
           }
-          case None =>
+          case None => {
+            (title, 0.0D)
+          }
         }
       }
     }
     buffer.toList.sortWith(_._2 > _._2)
+
   }
 
 }
