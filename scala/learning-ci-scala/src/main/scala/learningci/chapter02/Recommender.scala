@@ -11,9 +11,8 @@ trait Recommender {
   def getSimilarPersons(critics: List[Critic],
                         self: Person,
                         maxCount: Int): List[Tuple2[Person, Double]] = {
-
     val persons = critics map {
-      case Critic(person, title, rating) => person
+      case Critic(person, movie, rating) => person
     } distinct
 
     persons filter {
@@ -23,14 +22,12 @@ trait Recommender {
         (person, getSimilarity(critics, self, person))
       }
     } sortWith (_._2 > _._2) slice (0, maxCount)
-
   }
 
   def getRecommendations(critics: List[Critic],
-                         self: Person): List[Tuple2[String, Double]] = {
-
+                         self: Person): List[Tuple2[Movie, Double]] = {
     val persons = critics map {
-      case Critic(person, title, rating) => person
+      case Critic(person, movie, rating) => person
     } distinct
 
     val similarPersons: List[Tuple2[Person, Double]] = persons filter {
@@ -40,49 +37,44 @@ trait Recommender {
         (person, getSimilarity(critics, self, person))
       }
     }
-
     val criticsBySelf = critics filter {
-      case Critic(person, title, rating) => person == self
+      case Critic(person, movie, rating) => person == self
     }
-
-    val weightedCritics = new HashMap[String, Double]()
-    val sumsOfSimilarity = new HashMap[String, Double]()
-
+    val weightedCritics = new HashMap[Movie, Double]()
+    val sumsOfSimilarity = new HashMap[Movie, Double]()
     critics foreach {
-      case Critic(person, title, rating) => {
+      case Critic(person, movie, rating) => {
         criticsBySelf filter {
-          case Critic(p, t, r) => t == title
+          case Critic(p, m, r) => m == movie
         } size match {
           case 0 => {
             val similar = similarPersons filter {
               case (p, similarity) => p.name == person.name
             }
             val similarity = similar.head._2
-            weightedCritics.update(title,
-              weightedCritics.getOrElse(title, 0.0D) + rating * similarity)
-            sumsOfSimilarity.update(title,
-              sumsOfSimilarity.getOrElse(title, 0.0D) + similarity)
+            weightedCritics.update(movie,
+              weightedCritics.getOrElse(movie, 0.0D) + rating * similarity)
+            sumsOfSimilarity.update(movie,
+              sumsOfSimilarity.getOrElse(movie, 0.0D) + similarity)
           }
           case _ =>
         }
       }
     }
-
-    var buffer = new ListBuffer[Tuple2[String, Double]]
+    var buffer = new ListBuffer[Tuple2[Movie, Double]]
     weightedCritics map {
-      case (title, weightedValue) => {
-        sumsOfSimilarity.get(title) match {
+      case (movie, weightedValue) => {
+        sumsOfSimilarity.get(movie) match {
           case Some(denominator) => {
-            buffer.append((title, weightedValue / denominator))
+            buffer.append((movie, weightedValue / denominator))
           }
           case None => {
-            (title, 0.0D)
+            (movie, 0.0D)
           }
         }
       }
     }
     buffer.toList.sortWith(_._2 > _._2)
-
   }
 
 }
