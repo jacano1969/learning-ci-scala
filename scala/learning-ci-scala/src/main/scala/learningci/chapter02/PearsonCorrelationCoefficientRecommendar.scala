@@ -12,21 +12,21 @@ class PearsonCorrelationCoefficientRecommendar extends Recommender {
     var sumOfPowedCriticsByP2 = 0.0D
     var sumOfProducts = 0.0D
     val criticsByPerson1 = critics filter {
-      case Critic(person, movie, rating) => person == p1
+      case Critic(p, _, _) => p == p1
     }
     val criticsByPerson2 = critics filter {
-      case Critic(person, movie, rating) => person == p2
+      case Critic(p, _, _) => p == p2
     }
     criticsByPerson2 foreach {
-      case Critic(_, movie2, rating2) => {
-        val bothContains = criticsByPerson1 foreach {
-          case Critic(_, movie1, rating1) if movie1 == movie2 => {
+      case Critic(_, m2, r2) => {
+        criticsByPerson1 foreach {
+          case Critic(_, m1, r1) if m1 == m2 => {
             bothContainedCount += 1
-            sumOfCriticsByP1 += rating1
-            sumOfCriticsByP2 += rating2
-            sumOfPowedCriticsByP1 += math.pow(rating1, 2)
-            sumOfPowedCriticsByP2 += math.pow(rating2, 2)
-            sumOfProducts += rating1 * rating2
+            sumOfCriticsByP1 += r1
+            sumOfCriticsByP2 += r2
+            sumOfPowedCriticsByP1 += math.pow(r1, 2)
+            sumOfPowedCriticsByP2 += math.pow(r2, 2)
+            sumOfProducts += r1 * r2
           }
           case _ =>
         }

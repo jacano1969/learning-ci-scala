@@ -25,11 +25,11 @@ class EuclideanDistanceRecommenderSpec extends FlatSpec with ShouldMatchers {
   "EuclideanDistanceRecommender#getRecommendations" should "return expected values for Toby" in {
     val recommender = new EuclideanDistanceRecommender
     val recommendations: List[Tuple2[Movie, Double]] = recommender.getRecommendations(Critics.all, Person.toby)
-    recommendations.foreach({
-      case (movie, value) => {
-        println(movie.title + " => " + value)
+    recommendations foreach {
+      case (Movie(title), value) => {
+        println(title + " => " + value)
       }
-    })
+    }
     recommendations.size should equal(3)
     recommendations(0)._1.title should equal("The Night Listener")
     recommendations(1)._1.title should equal("Lady in the Water")

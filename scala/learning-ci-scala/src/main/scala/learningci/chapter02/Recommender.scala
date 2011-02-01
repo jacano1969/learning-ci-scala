@@ -67,8 +67,7 @@ trait Recommender {
         }
       }
     }
-    buffer.toList.sortWith(_._2 > _._2)
-
+    buffer.toList sortWith (_._2 > _._2)
   }
 
 }

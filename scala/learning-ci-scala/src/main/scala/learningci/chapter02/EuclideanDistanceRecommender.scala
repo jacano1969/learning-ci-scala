@@ -11,20 +11,18 @@ class EuclideanDistanceRecommender extends Recommender {
     val criticsByPerson2 = critics filter {
       case Critic(p, _, _) => p == p2
     }
-
     val sumOfValues = criticsByPerson2 map {
       case Critic(person2, movie2, rating2) => {
         val bothContains = criticsByPerson1 filter {
           case Critic(person1, movie1, rating1) => movie1 == movie2
         }
-        bothContains size match {
+        bothContains.size match {
           case 1 => math.pow(bothContains.head.rating - rating2, 2)
           case _ => 0.0D
         }
       }
     }
     1 / (1 + sumOfValues.sum)
-
   }
 
 }

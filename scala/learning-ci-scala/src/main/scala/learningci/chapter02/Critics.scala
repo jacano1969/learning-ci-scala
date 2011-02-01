@@ -26,7 +26,6 @@ object Movie {
 }
 
 case class Critic(val person: Person, val movie: Movie, val rating: Double) {
-
 }
 
 object Critics {
