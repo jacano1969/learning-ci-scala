@@ -6,10 +6,10 @@ class PearsonCorrelationCoefficientRecommendar extends Recommender {
                              p1: Person,
                              p2: Person): Double = {
     var bothContainedCount: Int = 0
-    var sumOfCriticsByP1 = 0.0D
-    var sumOfCriticsByP2 = 0.0D
-    var sumOfPowedCriticsByP1 = 0.0D
-    var sumOfPowedCriticsByP2 = 0.0D
+    var sumOfRatingsByP1 = 0.0D
+    var sumOfRatingsByP2 = 0.0D
+    var sumOfRatingSquaresByP1 = 0.0D
+    var sumOfRatingSquaresByP2 = 0.0D
     var sumOfProducts = 0.0D
     val criticsByPerson1 = critics filter {
       case Critic(p, _, _) => p == p1
@@ -22,20 +22,20 @@ class PearsonCorrelationCoefficientRecommendar extends Recommender {
         criticsByPerson1 foreach {
           case Critic(_, m1, r1) if m1 == m2 => {
             bothContainedCount += 1
-            sumOfCriticsByP1 += r1
-            sumOfCriticsByP2 += r2
-            sumOfPowedCriticsByP1 += math.pow(r1, 2)
-            sumOfPowedCriticsByP2 += math.pow(r2, 2)
+            sumOfRatingsByP1 += r1
+            sumOfRatingsByP2 += r2
+            sumOfRatingSquaresByP1 += math.pow(r1, 2)
+            sumOfRatingSquaresByP2 += math.pow(r2, 2)
             sumOfProducts += r1 * r2
           }
           case _ =>
         }
       }
     }
-    val numerator: Double = sumOfProducts - (sumOfCriticsByP1 * sumOfCriticsByP2 / bothContainedCount)
+    val numerator: Double = sumOfProducts - (sumOfRatingsByP1 * sumOfRatingsByP2 / bothContainedCount)
     val denominator: Double = math.sqrt(
-      (sumOfPowedCriticsByP1 - math.pow(sumOfCriticsByP1, 2))
-        * (sumOfPowedCriticsByP2 - math.pow(sumOfCriticsByP2, 2))
+      (sumOfRatingSquaresByP1 - math.pow(sumOfRatingsByP1, 2))
+        * (sumOfRatingSquaresByP2 - math.pow(sumOfRatingsByP2, 2))
         / bothContainedCount
     )
     denominator match {

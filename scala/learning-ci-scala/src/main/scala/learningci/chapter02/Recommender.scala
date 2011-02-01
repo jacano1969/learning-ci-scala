@@ -47,7 +47,7 @@ trait Recommender {
         } size match {
           case 0 => {
             val personAndSimilarity = similarPersons filter {
-              case (p, _) => p.name == person.name
+              case (p, _) => p == person
             } head
             val similarity = personAndSimilarity._2
             weightedCritics.update(movie, weightedCritics.getOrElse(movie, 0.0D) + rating * similarity)

@@ -4,6 +4,7 @@ case class Person(val name: String) {
 }
 
 object Person {
+
   val lisa = Person("Lisa Rose")
   val gene = Person("Gene Seymour")
   val michael = Person("Michael Phillips")
@@ -11,18 +12,21 @@ object Person {
   val mick = Person("Mick LaSalle")
   val jack = Person("Jack Matthews")
   val toby = Person("Toby")
+
 }
 
 case class Movie(val title: String) {
 }
 
 object Movie {
+
   val ladyInTheWater = Movie("Lady in the Water")
   val snakesOnAPlane = Movie("Snakes on a Plane")
   val justMyLuck = Movie("Just My Luck")
   val supermanReturns = Movie("Superman Returns")
   val youMeAndDupree = Movie("You, Me and Dupree")
   val theNightListener = Movie("The Night Listener")
+
 }
 
 case class Critic(val person: Person, val movie: Movie, val rating: Double) {
