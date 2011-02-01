@@ -7,12 +7,12 @@ class PearsonCorrelationCoefficientRecommenderSpec extends FlatSpec with ShouldM
 
   "PearsonCorrelationCoefficientRecommender#getSimilarPersons" should "return expected values for Toby" in {
     val recommender = new PearsonCorrelationCoefficientRecommendar
-    val similarPersons: List[Tuple2[Person, Double]] = recommender.getSimilarPersons(SampleData.critics, new Person("Toby"), 3)
-    similarPersons.foreach({
-      case (person, value) => {
-        println(person.name + " => " + value)
+    val similarPersons: List[Tuple2[Person, Double]] = recommender.getSimilarPersons(Critics.all, Person.toby, 3)
+    similarPersons foreach {
+      case (Person(name), value) => {
+        println(name + " => " + value)
       }
-    })
+    }
     similarPersons.size should equal(3)
     similarPersons(0)._1.name should equal("Mick LaSalle")
     similarPersons(1)._1.name should equal("Claudia Puig")
@@ -24,12 +24,12 @@ class PearsonCorrelationCoefficientRecommenderSpec extends FlatSpec with ShouldM
 
   "PearsonCorrelationCoefficientRecommender#getRecommendations" should "return expected values for Toby" in {
     val recommender = new PearsonCorrelationCoefficientRecommendar
-    val recommendations: List[Tuple2[Movie, Double]] = recommender.getRecommendations(SampleData.critics, new Person("Toby"))
-    recommendations.foreach({
-      case (name, value) => {
-        println(name + " => " + value)
+    val recommendations: List[Tuple2[Movie, Double]] = recommender.getRecommendations(Critics.all, Person.toby)
+    recommendations foreach {
+      case (Movie(title), value) => {
+        println(title + " => " + value)
       }
-    })
+    }
     recommendations.size should equal(3)
     recommendations(0)._1.title should equal("The Night Listener")
     recommendations(1)._1.title should equal("Lady in the Water")
