@@ -1,24 +1,25 @@
 package learningci.chapter02;
 
+import learningci.chapter02.data.*;
 import java.util.*;
 
 public abstract class AbstractRecommendar implements Recommender {
 
-    protected Map<String, Map<String, Double>> critics;
+    protected Map<Person, Map<Movie, Double>> data;
 
-    public void loadData(Map<String, Map<String, Double>> critics) {
-        this.critics = critics;
+    public void loadData(Map<Person, Map<Movie, Double>> data) {
+        this.data = data;
     }
 
     public List<Tuple<Person, Double>> getSimilarPersons(Person self, int maxCount) {
         List<Tuple<Person, Double>> dest = new ArrayList<Tuple<Person, Double>>();
-        Set<String> personNames = critics.keySet();
-        for (String personName : personNames) {
-            if (self.name.equals(personName)) {
+        Set<Person> persons = data.keySet();
+        for (Person person : persons) {
+            if (self.equals(person)) {
                 continue;
             }
-            Double simularity = getSimilarity(self, new Person(personName));
-            Tuple<Person, Double> result = new Tuple<Person, Double>(new Person(personName), simularity);
+            Double simularity = getSimilarity(self, person);
+            Tuple<Person, Double> result = new Tuple<Person, Double>(person, simularity);
             dest.add(result);
         }
         Collections.sort(dest, new Comparator<Tuple<Person, Double>>() {
@@ -29,43 +30,43 @@ public abstract class AbstractRecommendar implements Recommender {
         return new ArrayList<Tuple<Person, Double>>(dest.subList(0, maxCount));
     }
 
-    public List<Tuple<String, Double>> getRecommendations(Person self) {
+    public List<Tuple<Movie, Double>> getRecommendations(Person self) {
 
-        List<Tuple<String, Double>> dest = new ArrayList<Tuple<String, Double>>();
-        Map<String, Double> weightedCritics = new HashMap<String, Double>();
-        Map<String, Double> sumsOfSimilarity = new HashMap<String, Double>();
+        List<Tuple<Movie, Double>> dest = new ArrayList<Tuple<Movie, Double>>();
+        Map<Movie, Double> weighteddata = new HashMap<Movie, Double>();
+        Map<Movie, Double> sumsOfSimilarity = new HashMap<Movie, Double>();
 
-        Map<String, Double> criticsBySelf = critics.get(self.name);
-        Set<String> personNames = critics.keySet();
-        for (String personName : personNames) {
-            if (self.name.equals(personName)) {
+        Map<Movie, Double> dataBySelf = data.get(self);
+        Set<Person> persons = data.keySet();
+        for (Person person : persons) {
+            if (self.equals(person)) {
                 continue;
             }
-            Double simularity = getSimilarity(self, new Person(personName));
+            Double simularity = getSimilarity(self, person);
             if (simularity <= 0) {
                 continue;
             }
-            Map<String, Double> criticsByOther = critics.get(personName);
-            for (String title : criticsByOther.keySet()) {
-                if (criticsBySelf.get(title) == null && criticsByOther.get(title) != null) {
-                    if (weightedCritics.get(title) == null) {
-                        weightedCritics.put(title, 0.0D);
+            Map<Movie, Double> dataByOther = data.get(person);
+            for (Movie movie : dataByOther.keySet()) {
+                if (dataBySelf.get(movie) == null && dataByOther.get(movie) != null) {
+                    if (weighteddata.get(movie) == null) {
+                        weighteddata.put(movie, 0.0D);
                     }
-                    weightedCritics.put(title,
-                            weightedCritics.get(title) + criticsByOther.get(title) * simularity);
-                    if (sumsOfSimilarity.get(title) == null) {
-                        sumsOfSimilarity.put(title, 0.0D);
+                    weighteddata.put(movie,
+                            weighteddata.get(movie) + dataByOther.get(movie) * simularity);
+                    if (sumsOfSimilarity.get(movie) == null) {
+                        sumsOfSimilarity.put(movie, 0.0D);
                     }
-                    sumsOfSimilarity.put(title, sumsOfSimilarity.get(title) + simularity);
+                    sumsOfSimilarity.put(movie, sumsOfSimilarity.get(movie) + simularity);
                 }
             }
         }
-        for (String title : weightedCritics.keySet()) {
-            Tuple<String, Double> result = new Tuple(title, weightedCritics.get(title) / sumsOfSimilarity.get(title));
+        for (Movie movie : weighteddata.keySet()) {
+            Tuple<Movie, Double> result = new Tuple(movie, weighteddata.get(movie) / sumsOfSimilarity.get(movie));
             dest.add(result);
         }
-        Collections.sort(dest, new Comparator<Tuple<String, Double>>() {
-            public int compare(Tuple<String, Double> o1, Tuple<String, Double> o2) {
+        Collections.sort(dest, new Comparator<Tuple<Movie, Double>>() {
+            public int compare(Tuple<Movie, Double> o1, Tuple<Movie, Double> o2) {
                 return o1.right > o2.right ? 0 : 1;
             }
         });
