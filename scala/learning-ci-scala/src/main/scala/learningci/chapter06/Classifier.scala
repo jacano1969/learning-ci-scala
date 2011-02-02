@@ -65,9 +65,7 @@ class Classifier {
             tag: Tag): Unit = {
     val words = getDistinctWords(document)
     words foreach {
-      word => {
-        addToTagCountForWordsMap(word, tag)
-      }
+      word => addToTagCountForWordsMap(word, tag)
     }
     addToTagCountMap(tag)
   }
@@ -75,19 +73,18 @@ class Classifier {
   def getProbability(word: Word,
                      tag: Tag): Double = {
     val countPerTag = getCountPerTag(tag)
-    if (countPerTag == 0) 0 else getWordCountPerTag(word, tag) / countPerTag
+    if (countPerTag == 0) 0.0D else getWordCountPerTag(word, tag) / countPerTag
   }
 
   def getWeightedProbability(word: Word,
                              tag: Tag,
-                             weight: Double = 1.0,
-                             assumedProbability: Double = 0.5): Double = {
+                             weight: Double = 1.0D,
+                             assumedProbability: Double = 0.5D): Double = {
     val basicProbability = getProbability(word, tag)
     val sumOfWordCounts =
       getAllTags map {
         eachTag => getWordCountPerTag(word, eachTag)
-      } sum
-
+      } sum;
     ((weight * assumedProbability) + (sumOfWordCounts * basicProbability)
       ) / (weight + sumOfWordCounts)
   }
