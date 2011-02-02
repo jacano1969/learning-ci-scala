@@ -10,45 +10,42 @@ import java.util.Set;
 public class PearsonCorrelationCoefficientRecommendar extends AbstractRecommendar implements Recommender {
 
     public Double getSimilarity(Person person1, Person person2) {
-        Map<Movie, Double> critics1 = data.get(person1);
-        Map<Movie, Double> critics2 = data.get(person2);
+        Map<Movie, Double> criticsByPerson1 = data.get(person1);
+        Map<Movie, Double> criticsByPerson2 = data.get(person2);
         Set<Movie> bothContains = new HashSet<Movie>();
-        for (Movie movie1 : critics1.keySet()) {
-            for (Movie movie2 : critics2.keySet()) {
+        for (Movie movie1 : criticsByPerson1.keySet()) {
+            for (Movie movie2 : criticsByPerson2.keySet()) {
                 if (movie1.equals(movie2)) {
-                    if (critics1.get(movie1) != null && critics2.get(movie2) != null) {
+                    if (criticsByPerson1.get(movie1) != null && criticsByPerson2.get(movie2) != null) {
                         bothContains.add(movie1);
                     }
                     break;
                 }
             }
         }
-        Double sumOfCriticsByPerson1 = 0.0D;
-        Double sumOfCriticsByPerson2 = 0.0D;
+        Double sumOfRatingsByPerson1 = 0.0D;
+        Double sumOfRatingsByPerson2 = 0.0D;
         for (Movie movie : bothContains) {
-            sumOfCriticsByPerson1 += critics1.get(movie);
-            sumOfCriticsByPerson2 += critics2.get(movie);
+            sumOfRatingsByPerson1 += criticsByPerson1.get(movie);
+            sumOfRatingsByPerson2 += criticsByPerson2.get(movie);
         }
-        Double sumOfPowedCriticsByPerson1 = 0.0D;
-        Double sumOfPowedCriticsByPerson2 = 0.0D;
+        Double sumOfRatingSquaresByPerson1 = 0.0D;
+        Double sumOfRatingSquaresByPerson2 = 0.0D;
         for (Movie movie : bothContains) {
-            sumOfPowedCriticsByPerson1 += Math.pow(critics1.get(movie), 2);
-            sumOfPowedCriticsByPerson2 += Math.pow(critics2.get(movie), 2);
+            sumOfRatingSquaresByPerson1 += Math.pow(criticsByPerson1.get(movie), 2);
+            sumOfRatingSquaresByPerson2 += Math.pow(criticsByPerson2.get(movie), 2);
         }
         Double sumOfProducts = 0.0D;
         for (Movie movie : bothContains) {
-            sumOfProducts += critics1.get(movie) * critics2.get(movie);
+            sumOfProducts += criticsByPerson1.get(movie) * criticsByPerson2.get(movie);
         }
-        Integer bothContainsLen = bothContains.size();
-        Double numerator = sumOfProducts - (sumOfCriticsByPerson1 * sumOfCriticsByPerson2 / bothContainsLen);
+        Integer bothContainsCount = bothContains.size();
+        Double numerator = sumOfProducts - (sumOfRatingsByPerson1 * sumOfRatingsByPerson2 / bothContainsCount);
         Double denominator = Math.sqrt(
-                (sumOfPowedCriticsByPerson1 - Math.pow(sumOfCriticsByPerson1, 2))
-                        * (sumOfPowedCriticsByPerson2 - Math.pow(sumOfCriticsByPerson2, 2)
-                ) / bothContainsLen);
-        if (denominator == 0.0D) {
-            return 0.0D;
-        }
-        return numerator / denominator;
+                (sumOfRatingSquaresByPerson1 - Math.pow(sumOfRatingsByPerson1, 2))
+                        * (sumOfRatingSquaresByPerson2 - Math.pow(sumOfRatingsByPerson2, 2)
+                ) / bothContainsCount);
+        return (denominator == 0.0D) ? 0.0D : numerator / denominator;
     }
 
 }
