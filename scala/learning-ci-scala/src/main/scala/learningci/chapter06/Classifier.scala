@@ -86,7 +86,8 @@ class Classifier {
     val sumOfWordCounts =
       getAllTags map {
         eachTag => getWordCountPerTag(word, eachTag)
-      }.sum
+      } sum
+
     ((weight * assumedProbability) + (sumOfWordCounts * basicProbability)
       ) / (weight + sumOfWordCounts)
   }
