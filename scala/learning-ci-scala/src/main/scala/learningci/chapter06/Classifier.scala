@@ -41,9 +41,7 @@ class Classifier {
         }
         case None => 0.0D
       }
-    } else {
-      0.0D
-    }
+    } else 0.0D
   }
 
   def getCountPerTag(tag: Tag): Double = {
@@ -52,9 +50,7 @@ class Classifier {
         case Some(value) => value.toDouble
         case None => 0.0D
       }
-    } else {
-      0.0D
-    }
+    } else 0.0D
   }
 
   def getSumOfTagCounts(): Double = {
@@ -90,11 +86,9 @@ class Classifier {
     val sumOfWordCounts =
       getAllTags map {
         eachTag => getWordCountPerTag(word, eachTag)
-      } sum
-
+      }.sum
     ((weight * assumedProbability) + (sumOfWordCounts * basicProbability)
       ) / (weight + sumOfWordCounts)
   }
-
 
 }

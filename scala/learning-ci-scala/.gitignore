@@ -1,1 +1,8 @@
-target
+dist/*
+target/
+project/boot/
+project/plugins/project/
+learning-ci-scala.iml
+learning-ci-scala.ipr
+learning-ci-scala.iws
+
