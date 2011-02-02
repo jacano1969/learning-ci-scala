@@ -63,17 +63,7 @@
     <favorites_list name="learning-ci-scala" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Recommender.scala" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter02/Recommender.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="17" selection-start="2003" selection-end="2008" vertical-scroll-proportion="0.58773184">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -87,10 +77,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/EuclideanDisntanceRecommender.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/sandbox/scala/GetListFromMapSample.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/Main.scala" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/scala/learningci/chapter02/EuclideanDistanceRecommenderSuite.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/SampleCritics.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/Person.scala" />
@@ -99,10 +85,14 @@
         <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/Movie.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/learningci/chapter02/EuclideanDistanceRecommenderSpec.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/learningci/chapter02/PearsonCorrelationCoefficientRecommenderSpec.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/Critics.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/PearsonCorrelationCoefficientRecommendar.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/EuclideanDistanceRecommender.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/Critics.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter06/Document.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter06/Documents.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter02/Recommender.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/learningci/chapter06/Classifier.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/learningci/chapter06/ClassifierSpec.scala" />
       </list>
     </option>
   </component>
@@ -143,6 +133,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
@@ -188,6 +180,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="learningci" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chapter06" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning-ci-scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning-ci-scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learningci" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="chapter02" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -214,14 +240,76 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="chapter02" />
+              <option name="myItemId" value="learningci" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chapter06" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Documents.scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning-ci-scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning-ci-scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learningci" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chapter06" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning-ci-scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learning-ci-scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="learningci" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -241,7 +329,12 @@
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
-  <component name="RunManager" selected="ScalaTest.EuclideanDistanceRecommenderSpec">
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="learningci.chapter06" />
+    </key>
+  </component>
+  <component name="RunManager" selected="ScalaTest.ClassifierSpec">
     <configuration default="false" name="EuclideanDistanceRecommenderSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
       <module name="learning-ci-scala" />
       <setting name="path" value="learningci.chapter02.EuclideanDistanceRecommenderSpec" />
@@ -257,6 +350,18 @@
     <configuration default="false" name="PearsonCorrelationCoefficientRecommenderSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
       <module name="learning-ci-scala" />
       <setting name="path" value="learningci.chapter02.PearsonCorrelationCoefficientRecommenderSpec" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="version" value="false" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="ClassifierSpec" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
+      <module name="learning-ci-scala" />
+      <setting name="path" value="learningci.chapter06.ClassifierSpec" />
       <setting name="package" value="" />
       <setting name="vmparams" value="" />
       <setting name="params" value="" />
@@ -478,10 +583,11 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Scala Console.Scala Console" />
       <item index="1" class="java.lang.String" itemvalue="ScalaTest.EuclideanDistanceRecommenderSpec" />
       <item index="2" class="java.lang.String" itemvalue="ScalaTest.PearsonCorrelationCoefficientRecommenderSpec" />
+      <item index="3" class="java.lang.String" itemvalue="ScalaTest.ClassifierSpec" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -513,29 +619,49 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView" selected-index="0">
+    <todo-panel id="selected-file">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="default-changelist">
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1920" height="1028" extended-state="0" />
-    <editor active="true" />
+    <frame x="107" y="31" width="1330" height="954" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32882884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39905548" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32853717" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39808154" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3265766" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33333334" sideWeight="0.9754977" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297362" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30348524" sideWeight="0.23761262" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969835" sideWeight="0.6709906" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25683647" sideWeight="0.8198198" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27088213" sideWeight="0.82254195" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24986595" sideWeight="0.8198198" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18018018" sideWeight="0.93367344" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17745803" sideWeight="0.93367344" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900944" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="BSFConsole" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24986595" sideWeight="0.8198198" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -575,21 +701,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="24" selection-start="1721" selection-end="1721" vertical-scroll-proportion="0.06111111" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/learning-ci-scala.iws">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="86" selection-start="865" selection-end="865" vertical-scroll-proportion="0.38089624" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/learning-ci-scala.ipr">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="35" selection-start="358" selection-end="358" vertical-scroll-proportion="0.1639151" />
@@ -602,49 +713,90 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.8.0/scala-library-2.8.0.jar!/scala/collection/mutable/ListBuffer.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="26" selection-start="124" selection-end="124" vertical-scroll-proportion="0.06014151">
-          <folding />
-        </state>
+        <state line="3" column="26" selection-start="124" selection-end="124" vertical-scroll-proportion="0.06014151" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter02/Critics.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="10" selection-start="599" selection-end="599" vertical-scroll-proportion="-0.5763195">
-          <folding />
-        </state>
+        <state line="31" column="77" selection-start="777" selection-end="777" vertical-scroll-proportion="0.606357" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/scala/learningci/chapter02/EuclideanDistanceRecommenderSpec.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="105" selection-start="1233" selection-end="1233" vertical-scroll-proportion="0.79927665">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/learningci/chapter02/PearsonCorrelationCoefficientRecommenderSpec.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="65" selection-start="705" selection-end="705" vertical-scroll-proportion="0.30472854">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter02/PearsonCorrelationCoefficientRecommendar.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="40" selection-start="489" selection-end="489" vertical-scroll-proportion="0.054208275">
-          <folding />
-        </state>
+        <state line="26" column="105" selection-start="1233" selection-end="1233" vertical-scroll-proportion="0.4677661" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter02/EuclideanDistanceRecommender.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="16" selection-start="321" selection-end="321" vertical-scroll-proportion="0.21825963">
+        <state line="18" column="16" selection-start="617" selection-end="617" vertical-scroll-proportion="0.32383808" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter02/PearsonCorrelationCoefficientRecommendar.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="27" selection-start="804" selection-end="804" vertical-scroll-proportion="0.33990148">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.8.0/scala-library-2.8.0.jar!/scala/util/matching/Regex.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="59" selection-start="1765" selection-end="1770" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.8.0/scala-library-2.8.0.jar!/scala/package.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="6" selection-start="1776" selection-end="1776" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.8.0/scala-library-2.8.0.jar!/scala/collection/mutable/HashMap.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="15" selection-start="1356" selection-end="1356" vertical-scroll-proportion="0.40449437">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter02/Recommender.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="17" selection-start="2003" selection-end="2008" vertical-scroll-proportion="0.58773184">
+        <state line="51" column="35" selection-start="1619" selection-end="1619" vertical-scroll-proportion="0.91271347">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/learningci/chapter02/PearsonCorrelationCoefficientRecommenderSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="30" selection-start="631" selection-end="637" vertical-scroll-proportion="0.34155598">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.8.0/scala-library-2.8.0.jar!/scala/collection/SeqLike.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="15" selection-start="553" selection-end="553" vertical-scroll-proportion="0.14906833">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter06/Documents.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="27" selection-start="76" selection-end="76" vertical-scroll-proportion="0.05479452">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/learningci/chapter06/Classifier.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="3" selection-start="1606" selection-end="1606" vertical-scroll-proportion="1.4627329">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/learningci/chapter06/ClassifierSpec.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="40" selection-start="1549" selection-end="1549" vertical-scroll-proportion="0.5981735">
           <folding />
         </state>
       </provider>
