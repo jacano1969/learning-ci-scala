@@ -3,7 +3,7 @@
 import docclass
 
 classifier = docclass.classifier()
-classifier.load_sample_documents()
+classifier.train_sample_documents()
 
 print classifier.get_prb('quick', 'good')
 
