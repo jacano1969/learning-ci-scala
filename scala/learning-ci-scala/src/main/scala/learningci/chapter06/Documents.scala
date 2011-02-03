@@ -21,4 +21,5 @@ case class Tag(val value: String)
 object Tag {
   val Good = Tag("good")
   val Bad = Tag("bad")
+  val Unknown = Tag("unknown")
 }

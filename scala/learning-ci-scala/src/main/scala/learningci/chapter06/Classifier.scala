@@ -2,11 +2,11 @@ package learningci.chapter06
 
 import collection.mutable.HashMap
 
-class Classifier {
+trait Classifier {
 
-  private val tagCountForWordsMap = new HashMap[Word, HashMap[Tag, Int]]
+  protected val tagCountForWordsMap = new HashMap[Word, HashMap[Tag, Int]]
 
-  private val tagCountMap = new HashMap[Tag, Int]
+  protected val tagCountMap = new HashMap[Tag, Int]
 
   def getDistinctWords(document: Document): List[Word] = {
     val words = """\s+""".r.split(document.value).toList
@@ -70,17 +70,17 @@ class Classifier {
     addToTagCountMap(tag)
   }
 
-  def getProbability(word: Word,
-                     tag: Tag): Double = {
+  def getWordProbability(word: Word,
+                         tag: Tag): Double = {
     val countPerTag = getCountPerTag(tag)
     if (countPerTag == 0) 0.0D else getWordCountPerTag(word, tag) / countPerTag
   }
 
-  def getWeightedProbability(word: Word,
-                             tag: Tag,
-                             weight: Double = 1.0D,
-                             assumedProbability: Double = 0.5D): Double = {
-    val basicProbability = getProbability(word, tag)
+  def getWeightedWordProbability(word: Word,
+                                 tag: Tag,
+                                 weight: Double = 1.0D,
+                                 assumedProbability: Double = 0.5D): Double = {
+    val basicProbability = getWordProbability(word, tag)
     val sumOfWordCounts =
       getAllTags map {
         eachTag => getWordCountPerTag(word, eachTag)
@@ -88,5 +88,11 @@ class Classifier {
     ((weight * assumedProbability) + (sumOfWordCounts * basicProbability)
       ) / (weight + sumOfWordCounts)
   }
+
+  def getDocumentProbability(document: Document, tag: Tag): Double
+
+  def getTagProbability(document: Document, tag: Tag): Double
+
+  def getClassifiedTag(document: Document, default: Tag): Tag
 
 }
