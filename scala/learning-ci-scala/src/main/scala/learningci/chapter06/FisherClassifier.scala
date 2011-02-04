@@ -28,7 +28,7 @@ class FisherClassifier extends BasicClassifier {
     }
   }
 
-  def getFisherProbabily(document: Document, tag: Tag): Double = {
+  def getFisherProbability(document: Document, tag: Tag): Double = {
     var prob = 1.0D
     val words = getDistinctWords(document)
     words foreach {
@@ -55,7 +55,7 @@ class FisherClassifier extends BasicClassifier {
     var maxValue = 0.0D
     getAllTags foreach {
       eachTag => {
-        val prob = getFisherProbabily(document, eachTag)
+        val prob = getFisherProbability(document, eachTag)
         if (prob > getMinimumValue(eachTag) && prob > maxValue) {
           bestTag = eachTag
           maxValue = prob

@@ -11,8 +11,8 @@ class FisherClassifierSpec extends FlatSpec with ShouldMatchers {
       case (document, tag) => classifier.train(document, tag)
     }
     classifier.getTagProbabilityForWord(Word("quick"), Tag.Good) should equal(0.5714285714285715D)
-    classifier.getFisherProbabily(Document("quick rabbit"), Tag.Good) should equal(0.78013986588958D)
-    classifier.getFisherProbabily(Document("quick rabbit"), Tag.Bad) should equal(0.3563359628333526D)
+    classifier.getFisherProbability(Document("quick rabbit"), Tag.Good) should equal(0.78013986588958D)
+    classifier.getFisherProbability(Document("quick rabbit"), Tag.Bad) should equal(0.3563359628333526D)
   }
 
   "Chapter 6.6.3 : get classified tag " should "return good,bad,good,good" in {
