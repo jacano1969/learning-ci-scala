@@ -26,8 +26,8 @@ class NaiveBayesClassifier extends BasicClassifier {
   }
 
   override def getTagProbabilityForDocument(document: Document, tag: Tag): Double = {
-    val documentProbability = getBasicProbabilityForDocument(document, tag)
-    (getCountPerTag(tag) / getSumOfTagCounts) * documentProbability
+    val basicProb = getBasicProbabilityForDocument(document, tag)
+    (getCountPerTag(tag) / getSumOfTagCounts) * basicProb
   }
 
   override def getClassifiedTag(document: Document,
@@ -61,7 +61,7 @@ class NaiveBayesClassifier extends BasicClassifier {
       }
       case _ =>
     }
-    return bestTag
+    bestTag
   }
 
 }

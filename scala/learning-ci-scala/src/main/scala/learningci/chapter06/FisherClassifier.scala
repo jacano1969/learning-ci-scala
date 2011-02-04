@@ -21,7 +21,7 @@ class FisherClassifier extends BasicClassifier {
       case _ => {
         val wordProbList = getAllTags map {
           eachTag => super.getTagProbabilityForWord(word, eachTag)
-        };
+        }
         val frequencySum = wordProbList.sum
         wordProb / frequencySum
       }
@@ -47,7 +47,6 @@ class FisherClassifier extends BasicClassifier {
       sumValue += term
     }
     math.min(sumValue, 1.0).toDouble
-
   }
 
   override def getClassifiedTag(document: Document,
