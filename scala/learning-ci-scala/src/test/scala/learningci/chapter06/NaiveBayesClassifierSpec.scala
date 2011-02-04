@@ -7,7 +7,7 @@ class NaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.5.1 : get document probability " should "return 0.0625" in {
     val classifier = new NaiveBayesClassifier
-    classifier.getDocumentProbability(Document("Nobody owns the water"), Tag.Good) should equal(0.0625D)
+    classifier.getBasicProbabilityForDocument(Document("Nobody owns the water"), Tag.Good) should equal(0.0625D)
   }
 
   "Chapter 6.5.2 : After training all, get tag probability " should "return 0.15624, 0.05" in {

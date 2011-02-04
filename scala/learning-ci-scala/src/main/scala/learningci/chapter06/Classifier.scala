@@ -72,7 +72,6 @@ trait Classifier {
 
   def getWeightedWordProbability(word: Word,
                                  tag: Tag,
-                                 getTagProbFunc:(Word,Tag) => Double = getTagProbabilityForWord,
                                  weight: Double = 1.0D,
                                  assumedProbability: Double = 0.5D): Double = {
     val basicProbability = getTagProbabilityForWord(word, tag)

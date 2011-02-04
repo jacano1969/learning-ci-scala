@@ -16,7 +16,7 @@ class NaiveBayesClassifier extends BasicClassifier {
     tagThresholdMap.update(tag, threshold)
   }
 
-  def getDocumentProbability(document: Document, tag: Tag): Double = {
+  def getBasicProbabilityForDocument(document: Document, tag: Tag): Double = {
     val words = getDistinctWords(document)
     var probability = 1.0D
     words foreach {
@@ -26,7 +26,7 @@ class NaiveBayesClassifier extends BasicClassifier {
   }
 
   override def getTagProbabilityForDocument(document: Document, tag: Tag): Double = {
-    val documentProbability = getDocumentProbability(document, tag)
+    val documentProbability = getBasicProbabilityForDocument(document, tag)
     (getCountPerTag(tag) / getSumOfTagCounts) * documentProbability
   }
 
