@@ -16,6 +16,7 @@ mvn org.apache.maven.plugins:maven-archetype-plugin:1.0-alpha-7:create \
 seratchs-iMac:learning-ci-scala seratch$ ls -ltr /usr/local/bin/sbt*
 -rw-r--r--@ 1 seratch  staff  928236  2  3 00:02 /usr/local/bin/sbt-launch.jar
 -rwxr-xr-x  1 seratch  staff      64  2  3 00:05 /usr/local/bin/sbt
+
 seratchs-iMac:learning-ci-scala seratch$ cat /usr/local/bin/sbt
 #!/bin/sh
 java -Xmx512M -jar `dirname $0`/sbt-launch.jar "$@"
@@ -38,4 +39,7 @@ seratchs-iMac:learning-ci-scala seratch$ sbt
 1. Waiting for source changes... (press enter to interrupt)
 
 > 
+
+Windows - sbt.cmd
+java -Xmx512M -jar %~dp0/sbt-launch.jar
 
