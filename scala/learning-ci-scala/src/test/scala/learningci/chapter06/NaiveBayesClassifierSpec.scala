@@ -5,7 +5,7 @@ import org.scalatest.matchers.ShouldMatchers
 
 class NaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
 
-  "Chapter 6.5.1 : get document probability " should "return 0.0625" in {
+  "Chapter 6.5.1 : get basic probability " should "return 0.0625" in {
     val classifier = new NaiveBayesClassifier
     classifier.getBasicProbabilityForDocument(Document("Nobody owns the water"), Tag.Good) should equal(0.0625D)
   }

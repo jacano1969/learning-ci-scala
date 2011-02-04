@@ -15,7 +15,6 @@ class FisherClassifierSpec extends FlatSpec with ShouldMatchers {
     classifier.getFisherProbabily(Document("quick rabbit"), Tag.Bad) should equal(0.3563359628333526D)
   }
 
-
   "Chapter 6.6.3 : get classified tag " should "return good,bad,good,good" in {
     val classifier = new FisherClassifier
     Documents.all foreach {
@@ -23,6 +22,10 @@ class FisherClassifierSpec extends FlatSpec with ShouldMatchers {
     }
     classifier.getClassifiedTag(Document("quick rabbit")) should equal(Tag.Good)
     classifier.getClassifiedTag(Document("quick money")) should equal(Tag.Bad)
+    classifier.setMinimumValue(Tag.Bad, 0.8D)
+    classifier.getClassifiedTag(Document("quick money")) should equal(Tag.Good)
+    classifier.setMinimumValue(Tag.Good, 0.4D)
+    classifier.getClassifiedTag(Document("quick money")) should equal(Tag.Good)
   }
 
 }
