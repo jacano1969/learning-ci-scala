@@ -2,7 +2,7 @@ package learningci.chapter06
 
 import collection.mutable.HashMap
 
-class NaiveBayesClassifier extends Classifier {
+class NaiveBayesClassifier extends BasicClassifier {
 
   private val tagThresholdMap = new HashMap[Tag, Double]
 
@@ -16,7 +16,7 @@ class NaiveBayesClassifier extends Classifier {
     tagThresholdMap.update(tag, threshold)
   }
 
-  override def getDocumentProbability(document: Document, tag: Tag): Double = {
+  def getDocumentProbability(document: Document, tag: Tag): Double = {
     val words = getDistinctWords(document)
     var probability = 1.0D
     words foreach {
@@ -25,18 +25,19 @@ class NaiveBayesClassifier extends Classifier {
     probability
   }
 
-  override def getTagProbability(document: Document, tag: Tag): Double = {
+  override def getTagProbabilityForDocument(document: Document, tag: Tag): Double = {
     val documentProbability = getDocumentProbability(document, tag)
     (getCountPerTag(tag) / getSumOfTagCounts) * documentProbability
   }
 
-  override def getClassifiedTag(document: Document, default: Tag): Tag = {
+  override def getClassifiedTag(document: Document,
+                                default: Tag = Tag.Unknown): Tag = {
     val tagProbMap = new HashMap[Tag, Double]
     var maxValue = 0.0D
     var bestTag = default
     getAllTags foreach {
       tag => {
-        tagProbMap.update(tag, getTagProbability(document, tag))
+        tagProbMap.update(tag, getTagProbabilityForDocument(document, tag))
         tagProbMap.get(tag) match {
           case Some(value) if value > maxValue => {
             maxValue = value

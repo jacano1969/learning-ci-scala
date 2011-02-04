@@ -70,17 +70,12 @@ trait Classifier {
     addToTagCountMap(tag)
   }
 
-  def getWordProbability(word: Word,
-                         tag: Tag): Double = {
-    val countPerTag = getCountPerTag(tag)
-    if (countPerTag == 0) 0.0D else getWordCountPerTag(word, tag) / countPerTag
-  }
-
   def getWeightedWordProbability(word: Word,
                                  tag: Tag,
+                                 getTagProbFunc:(Word,Tag) => Double = getTagProbabilityForWord,
                                  weight: Double = 1.0D,
                                  assumedProbability: Double = 0.5D): Double = {
-    val basicProbability = getWordProbability(word, tag)
+    val basicProbability = getTagProbabilityForWord(word, tag)
     val sumOfWordCounts =
       getAllTags map {
         eachTag => getWordCountPerTag(word, eachTag)
@@ -89,9 +84,9 @@ trait Classifier {
       ) / (weight + sumOfWordCounts)
   }
 
-  def getDocumentProbability(document: Document, tag: Tag): Double
+  def getTagProbabilityForWord(word: Word, tag: Tag): Double
 
-  def getTagProbability(document: Document, tag: Tag): Double
+  def getTagProbabilityForDocument(document: Document, tag: Tag): Double
 
   def getClassifiedTag(document: Document, default: Tag): Tag
 

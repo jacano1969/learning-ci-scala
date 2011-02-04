@@ -28,7 +28,7 @@ class BasicClassifierSpec extends FlatSpec with ShouldMatchers {
         classifier.train(document, tag)
       }
     }
-    val result = classifier.getWordProbability(Word("quick"), Tag.Good)
+    val result = classifier.getTagProbabilityForWord(Word("quick"), Tag.Good)
     result should equal(0.6666666666666666D)
   }
 

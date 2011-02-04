@@ -221,7 +221,7 @@ class fisher_classifier(classifier):
     m = chi / 2.0
     sum = term = math.exp(-m)
     for i in range(1, df//2):
-      term *= m /i
+      term *= m / i
       sum += term
     return min(sum, 1.0)
 
