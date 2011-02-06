@@ -3,19 +3,15 @@
 import re
 import math
 
+# python 2.5 or above
+from sqlite3 import dbapi2 as sqlite
+
 class classifier:
 
   def __init__(self, get_distinct_words_func=None, filename=None):
-    # word : python, the
-    # tag : good, bad
-    self.tag_count_for_words_map = {}
-    self.tag_count_map  = {}
     if get_distinct_words_func:
       self.get_distinct_words = get_distinct_words_func 
 
-  # ---
-  # Chapter 6.3 Classifier training
-  # ---
   # original: getwords(doc)
   # ---
   def get_distinct_words(self,doc):
@@ -30,41 +26,65 @@ class classifier:
   # original: incf(self,f,cat)
   # ---
   def add_per_word(self, word, tag):
-    self.tag_count_for_words_map.setdefault(word,{})
-    self.tag_count_for_words_map[word].setdefault(tag,0)
-    self.tag_count_for_words_map[word][tag] += 1
+    count = self.get_word_count_per_tag(word, tag)
+    if count == 0:
+      self.conn.execute(
+        "insert into tag_count_for_words values ('%s','%s',1)"
+        % (word, tag)
+      )
+    else:
+      self.conn.execute(
+        "update tag_count_for_words set count=%d where word='%s' and tag='%s'" 
+        % (count+1, word, tag)
+      )
 
   # original: incc(self,cat)
   # ---
   def add(self, tag):
-    self.tag_count_map.setdefault(tag,0)
-    self.tag_count_map[tag] += 1
+    count = self.get_count_per_tag(tag)
+    if count == 0:
+      self.conn.execute(
+        "insert into tag_count values ('%s', 1)"
+        % (tag)
+      )
+    else:
+      self.conn.execute(
+        "update tag_count set count = %d where tag = '%s'"
+        % (count+1, tag)
+      )
 
   # original: fcount(self,f,cat)
   # ---
   def get_word_count_per_tag(self, word, tag):
-    if word in self.tag_count_for_words_map and tag in self.tag_count_for_words_map[word]:
-      return float(self.tag_count_for_words_map[word][tag])
-    else:
-      return 0.0
+    result = self.conn.execute(
+               "select count from tag_count_for_words where word = '%s' and tag = '%s'"
+               % (word,tag)
+             ).fetchone()
+    if result == None: return 0
+    else: return float(result[0])
 
   # original: catcount(self,cat)
   # ---
   def get_count_per_tag(self, tag):
-    if tag in self.tag_count_map:
-      return float(self.tag_count_map[tag])
-    else:
-      return 0.0
+    result = self.conn.execute(
+               "select count from tag_count where tag = '%s'"
+               % (tag)
+             ).fetchone()
+    if result == None: return 0
+    else: return result[0]
 
   # original: totalcount(self)
   # ---
   def get_sum_of_tag_count(self):
-    return sum(self.tag_count_map.values())
+    result = self.conn.execute("select sum(count) from tag_count").fetchone()
+    if result == None: return 0
+    else: return result[0]
 
   # original: categories(self)
   # ---
   def get_all_tags(self):
-    return self.tag_count_map.keys()
+    cursor = self.conn.execute("select tag from tag_count")
+    return [row[0] for row in cursor]
 
   # original: train(self,item,cat)
   # ---
@@ -73,6 +93,7 @@ class classifier:
     for word in words:
       self.add_per_word(word, tag)
     self.add(tag)
+    self.conn.commit()
 
   # original: sampletrain(cl)
   # ---
@@ -83,10 +104,6 @@ class classifier:
     self.train('make quick money at the online casino', 'bad')
     self.train('the quick brown fox jumps', 'good')
 
-  # ---
-  # Chapter 6.4 Probability
-  # ---
-
   # original: fprob(self,f,cat)
   # ---
   def get_word_prb(self, word, tag):
@@ -94,10 +111,6 @@ class classifier:
       return 0
     else:
       return self.get_word_count_per_tag(word, tag) / self.get_count_per_tag(tag)
-
-  # ---
-  # Chapter 6.4.1 Weighted probability
-  # --- 
 
   # original: weightedprob(self,f,cat,prf,weight=1.0,ap=0.5)
   # ---
@@ -111,12 +124,25 @@ class classifier:
       self.get_word_count_per_tag(word, tag) 
         for tag in self.get_all_tags()
     ])
-    average_of_values = ((weight * assumed_prb) + (sum_of_word_count * basic_prb)) / (weight + sum_of_word_count)
+    average_of_values = (
+        (weight * assumed_prb) + (sum_of_word_count * basic_prb)
+      ) / (weight + sum_of_word_count)
     return average_of_values
 
-# ---
-# Chapter 6.5.1 Naive Bayes classifier
-# ---
+  def set_db(self, dbfile):
+    self.conn = sqlite.connect(dbfile)
+    self.conn.execute('create table if not exists tag_count_for_words(word,tag,count)')
+    self.conn.execute('create table if not exists tag_count(tag,count)')
+
+  def print_db(self):
+    cursor1 = self.conn.execute("select * from tag_count_for_words")
+    print "--- tag_count_for_words ---"
+    for row in cursor1:
+      print row[0],",",row[1],",",row[2]
+    cursor2 = self.conn.execute("select * from tag_count")
+    print "--- tag_count ---"
+    for row in cursor2:
+      print row[0],",",row[1]
 
 class naive_bayes_classifier(classifier):
 
@@ -129,22 +155,12 @@ class naive_bayes_classifier(classifier):
       prb *= self.get_weighted_prb(word, tag)
     return prb
 
-  # ---
-  # Chapter 6.5.2 Introduction of Bayes' theore
-  # ---
-  # Pr(A|B) = Pr(B|A) x Pr(A)/Pr(B)
-  # -> Pr(tag|document) = Pr(document|tag) x Pr(tag)/Pr(document)
-
   # original: prob(self,item,cat)
   # ---
   def get_tag_prb(self, doc, tag):
-    tag_prb = self.get_count_per_tag(tag) / self.get_sum_of_tag_count()
+    tag_prb = float(self.get_count_per_tag(tag)) / float(self.get_sum_of_tag_count())
     doc_prb = self.get_doc_prb(doc, tag)
     return doc_prb * tag_prb 
-
-  # ---
-  # Chapter 6.5.3 Threshold
-  # ---
 
   def __init__(self, get_distinct_words_func=None):
     classifier.__init__(self, get_distinct_words_func)
@@ -178,15 +194,7 @@ class naive_bayes_classifier(classifier):
         return default
     return best_tag
 
-# ---
-# Chapter 6.6 Fisher classifier
-# ---
-
 class fisher_classifier(classifier):
-
-  # ---
-  # Chapter 6.6.1 
-  # ---
 
   # original: cprob(self,f,cat)
   # ---
@@ -200,10 +208,6 @@ class fisher_classifier(classifier):
     prb = clf / (freq_sum)
     return prb
 
-  # ---
-  # Chapter 6.6.2
-  # ---
-
   # original: fisherprob(self,item,cat)
   # ---
   def get_fisher_prb(self, doc, tag):
@@ -214,7 +218,6 @@ class fisher_classifier(classifier):
     word_score = -2 * math.log(prb)
     return self.get_chi_square_dist(word_score, len(words) * 2)
 
-  # chi-square distribution
   # original: invchi2(self,chi,df)
   # ---
   def get_chi_square_dist(self, chi, df):
@@ -224,10 +227,6 @@ class fisher_classifier(classifier):
       term *= m / i
       sum += term
     return min(sum, 1.0)
-
-  # ---
-  # Chapter 6.6.3
-  # ---
 
   def __init__(self,get_words_func=None):
     classifier.__init__(self, get_words_func)
