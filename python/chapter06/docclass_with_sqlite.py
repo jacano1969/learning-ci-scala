@@ -228,8 +228,8 @@ class fisher_classifier(classifier):
       sum += term
     return min(sum, 1.0)
 
-  def __init__(self,get_words_func=None):
-    classifier.__init__(self, get_words_func)
+  def __init__(self, get_distinct_words_func=None):
+    classifier.__init__(self, get_distinct_words_func)
     self.minimums = {}
 
   # original: setminimum(self,cat,min)
