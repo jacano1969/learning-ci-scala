@@ -1,8 +1,9 @@
 package learningci.chapter06
 
+import learningci.chapter06.datastore._
 import collection.mutable.HashMap
 
-class NaiveBayesClassifier extends BasicClassifier {
+trait NaiveBayesClassifier extends AbstractClassifier {
 
   private val tagThresholdMap = new HashMap[Tag, Double]
 
@@ -65,3 +66,7 @@ class NaiveBayesClassifier extends BasicClassifier {
   }
 
 }
+
+class InMemoryNaiveBayesClassifier extends NaiveBayesClassifier with InMemoryDatastore
+
+class SqliteNaiveBayesClassifier extends NaiveBayesClassifier with SqliteDatastore

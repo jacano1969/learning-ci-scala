@@ -1,10 +1,11 @@
 package learningci.chapter06
 
+import learningci.chapter06.datastore._
 import collection.mutable.HashMap
 
-class FisherClassifier extends BasicClassifier {
+trait FisherClassifier extends AbstractClassifier {
 
-  private var tagMimimumValueMap = new HashMap[Tag, Double]
+  private val tagMimimumValueMap = new HashMap[Tag, Double]
 
   def getMinimumValue(tag: Tag): Double = {
     tagMimimumValueMap.getOrElse(tag, 0.0D)
@@ -66,3 +67,7 @@ class FisherClassifier extends BasicClassifier {
   }
 
 }
+
+class InMemoryFisherClassifier extends FisherClassifier with InMemoryDatastore
+
+class SqliteFisherClassifier extends FisherClassifier with SqliteDatastore

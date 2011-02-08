@@ -1,6 +1,7 @@
 package learningci.util
 
-import java.sql.{Array => _, _}
+import java.sql._
+import collection.mutable.{ListBuffer, HashMap}
 
 class SqliteDatabase(val file: String) {
 
@@ -29,7 +30,10 @@ class SqliteDatabase(val file: String) {
       conn.commit
       conn.setAutoCommit(true)
     } catch {
-      case _ => rollback
+      case e => {
+        e.printStackTrace
+        rollback
+      }
     }
   }
 
@@ -41,28 +45,63 @@ class SqliteDatabase(val file: String) {
     }
   }
 
-  def execteQuery(query: String): ResultSet = {
-    try {
-      val statement = conn.createStatement()
-      statement.executeQuery(query)
-    } catch {
-      case _ => {
-        rollback
-        return null
+  private def bindParams(statement: PreparedStatement, params: List[Any]): Unit = {
+    var i = 1
+    params foreach {
+      param => {
+        statement.setObject(i, param)
+        i += 1
       }
     }
   }
 
-  def executeUpdate(query: String): Int = {
+  def executeQuery(query: String, params: List[Any] = List()): List[Map[String, Any]] = {
+    var buffer = new ListBuffer[Map[String, Any]]
     try {
-      val statement = conn.createStatement()
-      statement.executeUpdate(query)
+      val statement = conn.prepareStatement(query)
+      bindParams(statement, params)
+      val resultSet = statement.executeQuery()
+      resultSet match {
+        case rs if resultSet != null => {
+          while (rs.next) {
+            val each = new HashMap[String, Object]
+            for (i <- 1 to rs.getMetaData.getColumnCount) {
+              val name = rs.getMetaData.getColumnName(i);
+              each.update(name, rs.getObject(name))
+            }
+            buffer.append(each.toMap)
+          }
+        }
+        case _ =>
+      }
     } catch {
-      case _ => {
+      case e => {
+        e.printStackTrace
         rollback
-        return 0
       }
     }
+    buffer.toList
+  }
+
+  def executeUpdate(query: String, params: List[Any] = List()): Int = {
+    var dest: Int = 0
+    try {
+      val statement = conn.prepareStatement(query)
+      var i = 1
+      params foreach {
+        param => {
+          statement.setObject(i, param)
+          i += 1
+        }
+      }
+      dest = statement.executeUpdate()
+    } catch {
+      case e => {
+        e.printStackTrace
+        rollback
+      }
+    }
+    dest
   }
 
 }

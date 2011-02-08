@@ -1,14 +1,29 @@
 package learningci.chapter06
 
-import collection.mutable.HashMap
+import datastore.Datastore
 
 trait Classifier {
 
-  protected val tagCountForWordsMap = new HashMap[Word, HashMap[Tag, Int]]
+  def getDistinctWords(document: Document): List[Word]
 
-  protected val tagCountMap = new HashMap[Tag, Int]
+  def train(document: Document, tag: Tag): Unit
 
-  def getDistinctWords(document: Document): List[Word] = {
+  def getWeightedWordProbability(word: Word,
+                                 tag: Tag,
+                                 weight: Double = 1.0D,
+                                 assumedProbability: Double = 0.5D): Double
+
+  def getTagProbabilityForWord(word: Word, tag: Tag): Double
+
+  def getTagProbabilityForDocument(document: Document, tag: Tag): Double
+
+  def getClassifiedTag(document: Document, default: Tag): Tag
+
+}
+
+abstract class AbstractClassifier extends Classifier with Datastore {
+
+  override def getDistinctWords(document: Document): List[Word] = {
     val words = """\s+""".r.split(document.value).toList
     words filter {
       word => word.length > 2 && word.length < 20
@@ -17,60 +32,29 @@ trait Classifier {
     }
   }
 
-  def addToTagCountForWordsMap(word: Word,
-                               tag: Tag): Unit = {
-    val eachTagCountMap = tagCountForWordsMap.get(word) match {
-      case Some(alreadyExists) => alreadyExists
-      case _ => new HashMap[Tag, Int]
-    }
-    eachTagCountMap.update(tag, eachTagCountMap.getOrElse(tag, 0) + 1)
-    tagCountForWordsMap.update(word, eachTagCountMap)
+  override def getTagProbabilityForWord(word: Word, tag: Tag): Double = {
+    val countPerTag = getCountPerTag(tag)
+    if (countPerTag == 0) 0.0D else getWordCountPerTag(word, tag) / countPerTag
   }
 
-  def addToTagCountMap(tag: Tag): Unit = {
-    tagCountMap.update(tag, tagCountMap.getOrElse(tag, 0) + 1)
+  override def getTagProbabilityForDocument(document: Document, tag: Tag): Double = {
+    throw new UnsupportedOperationException
   }
 
-  def getWordCountPerTag(word: Word,
-                         tag: Tag): Double = {
-    if (tagCountForWordsMap.contains(word) && tagCountMap.contains(tag)) {
-      tagCountForWordsMap.get(word) match {
-        case Some(tagCountForTheWord) => tagCountForTheWord.get(tag) match {
-          case Some(count) => count.toDouble
-          case _ => 0.0D
-        }
-        case _ => 0.0D
-      }
-    } else 0.0D
+  override def getClassifiedTag(document: Document, default: Tag): Tag = {
+    throw new UnsupportedOperationException
   }
 
-  def getCountPerTag(tag: Tag): Double = {
-    if (tagCountMap.contains(tag)) {
-      tagCountMap.get(tag) match {
-        case Some(value) => value.toDouble
-        case _ => 0.0D
-      }
-    } else 0.0D
-  }
-
-  def getSumOfTagCounts(): Double = {
-    tagCountMap.values.sum
-  }
-
-  def getAllTags(): List[Tag] = {
-    tagCountMap.keys.toList
-  }
-
-  def train(document: Document,
-            tag: Tag): Unit = {
+  override def train(document: Document,
+                     tag: Tag): Unit = {
     val words = getDistinctWords(document)
     words foreach {
-      word => addToTagCountForWordsMap(word, tag)
+      word => addToTagCountForWords(word, tag)
     }
-    addToTagCountMap(tag)
+    addToTagCount(tag)
   }
 
-  def getWeightedWordProbability(word: Word,
+ override  def getWeightedWordProbability(word: Word,
                                  tag: Tag,
                                  weight: Double = 1.0D,
                                  assumedProbability: Double = 0.5D): Double = {
@@ -83,10 +67,5 @@ trait Classifier {
       ) / (weight + sumOfWordCounts)
   }
 
-  def getTagProbabilityForWord(word: Word, tag: Tag): Double
-
-  def getTagProbabilityForDocument(document: Document, tag: Tag): Double
-
-  def getClassifiedTag(document: Document, default: Tag): Tag
-
 }
+
