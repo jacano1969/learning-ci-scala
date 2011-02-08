@@ -26,18 +26,18 @@ class InMemoryNaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }
-    classifier.getClassifiedTag(Document("quick rabbit"), Tag.Unknown) should equal(Tag.Good)
-    classifier.getClassifiedTag(Document("quick money"), Tag.Unknown) should equal(Tag.Bad)
+    classifier.getClassifiedTag(Document("quick rabbit")) should equal(Tag.Good)
+    classifier.getClassifiedTag(Document("quick money")) should equal(Tag.Bad)
 
     classifier.setThreshold(Tag.Bad, 3.0D)
-    classifier.getClassifiedTag(Document("quick money"), Tag.Unknown) should equal(Tag.Unknown)
+    classifier.getClassifiedTag(Document("quick money")) should equal(Tag.Unknown)
 
     for (i <- 1 to 10) {
       Documents.all foreach {
         case (document, tag) => classifier.train(document, tag)
       }
     }
-    classifier.getClassifiedTag(Document("quick money"), Tag.Unknown) should equal(Tag.Bad)
+    classifier.getClassifiedTag(Document("quick money")) should equal(Tag.Bad)
   }
 
 }
