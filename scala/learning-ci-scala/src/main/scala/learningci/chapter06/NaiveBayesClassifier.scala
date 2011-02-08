@@ -3,7 +3,7 @@ package learningci.chapter06
 import learningci.chapter06.datastore._
 import collection.mutable.HashMap
 
-trait NaiveBayesClassifier extends AbstractClassifier {
+class NaiveBayesClassifier extends AbstractClassifier {
 
   private val tagThresholdMap = new HashMap[Tag, Double]
 
@@ -28,7 +28,7 @@ trait NaiveBayesClassifier extends AbstractClassifier {
 
   override def getTagProbabilityForDocument(document: Document, tag: Tag): Double = {
     val basicProb = getBasicProbabilityForDocument(document, tag)
-    (getCountPerTag(tag) / getSumOfTagCounts) * basicProb
+    (datastore.getCountPerTag(tag) / datastore.getSumOfTagCounts) * basicProb
   }
 
   override def getClassifiedTag(document: Document,
@@ -36,7 +36,7 @@ trait NaiveBayesClassifier extends AbstractClassifier {
     val tagProbMap = new HashMap[Tag, Double]
     var maxValue = 0.0D
     var bestTag = default
-    getAllTags foreach {
+    datastore.getAllTags foreach {
       tag => {
         tagProbMap.update(tag, getTagProbabilityForDocument(document, tag))
         tagProbMap.get(tag) match {
@@ -66,7 +66,3 @@ trait NaiveBayesClassifier extends AbstractClassifier {
   }
 
 }
-
-class InMemoryNaiveBayesClassifier extends NaiveBayesClassifier with InMemoryDatastore
-
-class SqliteNaiveBayesClassifier extends NaiveBayesClassifier with SqliteDatastore

@@ -1,14 +1,12 @@
 package learningci.chapter06
 
-import learningci.chapter06.input._
-
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 
 class InMemoryFisherClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.6.2 : get fisher probability " should "return expected values" in {
-    val classifier = new InMemoryFisherClassifier
+    val classifier = new FisherClassifier
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }
@@ -18,7 +16,7 @@ class InMemoryFisherClassifierSpec extends FlatSpec with ShouldMatchers {
   }
 
   "Chapter 6.6.3 : get classified tag " should "return good,bad,good,good" in {
-    val classifier = new InMemoryFisherClassifier
+    val classifier = new FisherClassifier
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }

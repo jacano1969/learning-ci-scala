@@ -3,7 +3,7 @@ package learningci.chapter06
 import learningci.chapter06.datastore._
 import collection.mutable.HashMap
 
-trait FisherClassifier extends AbstractClassifier {
+class FisherClassifier extends AbstractClassifier {
 
   private val tagMimimumValueMap = new HashMap[Tag, Double]
 
@@ -20,7 +20,7 @@ trait FisherClassifier extends AbstractClassifier {
     wordProb match {
       case 0.0D => 0.0D
       case _ => {
-        val wordProbList = getAllTags map {
+        val wordProbList = datastore.getAllTags map {
           eachTag => super.getTagProbabilityForWord(word, eachTag)
         }
         val frequencySum = wordProbList.sum
@@ -54,7 +54,7 @@ trait FisherClassifier extends AbstractClassifier {
                                 default: Tag = Tag.Unknown): Tag = {
     var bestTag = default
     var maxValue = 0.0D
-    getAllTags foreach {
+    datastore.getAllTags foreach {
       eachTag => {
         val prob = getFisherProbability(document, eachTag)
         if (prob > getMinimumValue(eachTag) && prob > maxValue) {
@@ -67,7 +67,3 @@ trait FisherClassifier extends AbstractClassifier {
   }
 
 }
-
-class InMemoryFisherClassifier extends FisherClassifier with InMemoryDatastore
-
-class SqliteFisherClassifier extends FisherClassifier with SqliteDatastore

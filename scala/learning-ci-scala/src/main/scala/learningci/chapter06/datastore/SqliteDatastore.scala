@@ -4,7 +4,7 @@ import learningci.util.SqliteDatabase
 import collection.mutable.ListBuffer
 import learningci.chapter06._
 
-trait SqliteDatastore extends Datastore {
+class SqliteDatastore extends Datastore {
 
   protected val db = new SqliteDatabase("./SqliteDatastore.db")
 

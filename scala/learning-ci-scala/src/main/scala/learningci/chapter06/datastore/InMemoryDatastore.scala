@@ -3,7 +3,7 @@ package learningci.chapter06.datastore
 import collection.mutable.HashMap
 import learningci.chapter06._
 
-trait InMemoryDatastore extends Datastore {
+class InMemoryDatastore extends Datastore {
 
   protected val tagCountForWordsMap = new HashMap[Word, HashMap[Tag, Int]]
 

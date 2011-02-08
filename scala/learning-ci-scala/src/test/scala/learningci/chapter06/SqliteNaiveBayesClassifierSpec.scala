@@ -1,6 +1,6 @@
 package learningci.chapter06
 
-import learningci.chapter06.input._
+import learningci.chapter06.datastore._
 
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
@@ -9,13 +9,15 @@ class SqliteNaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.5.1 : get basic probability " should "return 0.0625" in {
     DatabaseTool.initialize
-    val classifier = new SqliteNaiveBayesClassifier
+    val classifier = new NaiveBayesClassifier
+    classifier.setDatastore(new SqliteDatastore)
     classifier.getBasicProbabilityForDocument(Document("Nobody owns the water"), Tag.Good) should equal(0.0625D)
   }
 
   "Chapter 6.5.2 : After training all, get tag probability " should "return 0.15624, 0.05" in {
     DatabaseTool.initialize
-    val classifier = new SqliteNaiveBayesClassifier
+    val classifier = new NaiveBayesClassifier
+    classifier.setDatastore(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }
@@ -25,7 +27,8 @@ class SqliteNaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.5.3 : After training all, get classified tag " should "return expected values" in {
     DatabaseTool.initialize
-    val classifier = new SqliteNaiveBayesClassifier
+    val classifier = new NaiveBayesClassifier
+    classifier.setDatastore(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }
