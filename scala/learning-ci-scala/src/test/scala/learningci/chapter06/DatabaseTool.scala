@@ -4,7 +4,9 @@ import learningci.util.SqliteDatabase
 
 object DatabaseTool {
 
-  val db = new SqliteDatabase("./SqliteDatastore.db")
+  var filename = "./SqliteDatastore.db"
+
+  val db = new SqliteDatabase(filename)
 
   def getDatabase() = db
 
