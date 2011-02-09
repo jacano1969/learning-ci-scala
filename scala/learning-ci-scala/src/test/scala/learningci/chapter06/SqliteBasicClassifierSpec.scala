@@ -7,7 +7,7 @@ import org.scalatest.matchers.ShouldMatchers
 class SqliteBasicClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.3 : after training 2 documents, 'quick' in 'good' " should "return 1.0" in {
-    DatabaseTool.initialize
+    DatabaseTool.initialize()
     val classifier = new BasicClassifier(new SqliteDatastore)
     classifier.train(Document("the quick brown fox jumps over the lazy dog"), Tag.Good)
     classifier.train(Document("make quick money in the online casino"), Tag.Bad)
@@ -16,7 +16,7 @@ class SqliteBasicClassifierSpec extends FlatSpec with ShouldMatchers {
   }
 
   "Chapter 6.3 : after training 2 documents, 'quick' in 'bad' " should "return 1.0" in {
-    DatabaseTool.initialize
+    DatabaseTool.initialize()
     val classifier = new BasicClassifier(new SqliteDatastore)
     classifier.train(Document("the quick brown fox jumps over the lazy dog"), Tag.Good)
     classifier.train(Document("make quick money in the online casino"), Tag.Bad)
@@ -25,7 +25,7 @@ class SqliteBasicClassifierSpec extends FlatSpec with ShouldMatchers {
   }
 
   "Chapter 6.4 : get basic word probability for 'quick' in 'good' " should "return 0.666..." in {
-    DatabaseTool.initialize
+    DatabaseTool.initialize()
     val classifier = new BasicClassifier(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => {
@@ -37,7 +37,7 @@ class SqliteBasicClassifierSpec extends FlatSpec with ShouldMatchers {
   }
 
   "Chapter 6.4.1 : get weighted word probability for 'money' in 'good' " should "return 0.25, 0.166..." in {
-    DatabaseTool.initialize
+    DatabaseTool.initialize()
     val classifier = new BasicClassifier(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => {
