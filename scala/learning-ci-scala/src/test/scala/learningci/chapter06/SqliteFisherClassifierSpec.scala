@@ -9,8 +9,7 @@ class SqliteFisherClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.6.2 : get fisher probability " should "return expected values" in {
     DatabaseTool.initialize
-    val classifier = new FisherClassifier
-    classifier.setDatastore(new SqliteDatastore)
+    val classifier = new FisherClassifier(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }
@@ -21,8 +20,7 @@ class SqliteFisherClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.6.3 : get classified tag " should "return good,bad,good,good" in {
     DatabaseTool.initialize
-    val classifier = new FisherClassifier
-    classifier.setDatastore(new SqliteDatastore)
+    val classifier = new FisherClassifier(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }

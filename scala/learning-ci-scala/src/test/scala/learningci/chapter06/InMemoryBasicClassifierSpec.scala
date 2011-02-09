@@ -9,7 +9,7 @@ class InMemoryBasicClassifierSpec extends FlatSpec with ShouldMatchers {
     val classifier = new BasicClassifier
     classifier.train(Document("the quick brown fox jumps over the lazy dog"), Tag.Good)
     classifier.train(Document("make quick money in the online casino"), Tag.Bad)
-    val result = classifier.getDatastore.getWordCountPerTag(Word("quick"), Tag.Good)
+    val result = classifier.datastore.getWordCountPerTag(Word("quick"), Tag.Good)
     result should equal(1.0D)
   }
 
@@ -17,7 +17,7 @@ class InMemoryBasicClassifierSpec extends FlatSpec with ShouldMatchers {
     val classifier = new BasicClassifier
     classifier.train(Document("the quick brown fox jumps over the lazy dog"), Tag.Good)
     classifier.train(Document("make quick money in the online casino"), Tag.Bad)
-    val result = classifier.getDatastore.getWordCountPerTag(Word("quick"), Tag.Bad)
+    val result = classifier.datastore.getWordCountPerTag(Word("quick"), Tag.Bad)
     result should equal(1.0D)
   }
 

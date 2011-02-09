@@ -4,10 +4,6 @@ import learningci.chapter06.datastore._
 
 trait Classifier {
 
-  def getDatastore(): Datastore
-
-  def setDatastore(datastore: Datastore): Unit
-
   def getDistinctWords(document: Document): List[Word]
 
   def train(document: Document, tag: Tag): Unit

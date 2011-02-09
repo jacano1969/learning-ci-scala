@@ -1,9 +1,13 @@
 package learningci.chapter06
 
-import learningci.chapter06.datastore._
 import collection.mutable.HashMap
+import datastore._
 
-class FisherClassifier extends AbstractClassifier {
+class FisherClassifier(override val datastore: Datastore) extends AbstractClassifier(datastore) {
+
+  def this() = {
+    this (new InMemoryDatastore)
+  }
 
   private val tagMimimumValueMap = new HashMap[Tag, Double]
 

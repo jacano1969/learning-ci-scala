@@ -9,15 +9,13 @@ class SqliteNaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.5.1 : get basic probability " should "return 0.0625" in {
     DatabaseTool.initialize
-    val classifier = new NaiveBayesClassifier
-    classifier.setDatastore(new SqliteDatastore)
+    val classifier = new NaiveBayesClassifier(new SqliteDatastore)
     classifier.getBasicProbabilityForDocument(Document("Nobody owns the water"), Tag.Good) should equal(0.0625D)
   }
 
   "Chapter 6.5.2 : After training all, get tag probability " should "return 0.15624, 0.05" in {
     DatabaseTool.initialize
-    val classifier = new NaiveBayesClassifier
-    classifier.setDatastore(new SqliteDatastore)
+    val classifier = new NaiveBayesClassifier(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }
@@ -27,8 +25,7 @@ class SqliteNaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.5.3 : After training all, get classified tag " should "return expected values" in {
     DatabaseTool.initialize
-    val classifier = new NaiveBayesClassifier
-    classifier.setDatastore(new SqliteDatastore)
+    val classifier = new NaiveBayesClassifier(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }
@@ -48,8 +45,7 @@ class SqliteNaiveBayesClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.7 : get classified tag" should "return bad" in {
     DatabaseTool.initialize
-    val classifier = new NaiveBayesClassifier
-    classifier.setDatastore(new SqliteDatastore)
+    val classifier = new NaiveBayesClassifier(new SqliteDatastore)
     Documents.all foreach {
       case (document, tag) => classifier.train(document, tag)
     }

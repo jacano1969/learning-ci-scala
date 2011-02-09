@@ -2,16 +2,10 @@ package learningci.chapter06
 
 import learningci.chapter06.datastore._
 
-abstract class AbstractClassifier extends Classifier {
+abstract class AbstractClassifier(val datastore: Datastore) extends Classifier {
 
-  protected var datastore: Datastore = new InMemoryDatastore
-
-  override def getDatastore(): Datastore = {
-    this.datastore
-  }
-
-  override def setDatastore(datastore: Datastore): Unit = {
-    this.datastore = datastore
+  def this() = {
+    this (new InMemoryDatastore)
   }
 
   override def getDistinctWords(document: Document): List[Word] = {
