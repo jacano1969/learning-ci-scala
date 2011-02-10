@@ -78,23 +78,9 @@ class SqliteDatastore(val db: SqliteDatabase) extends Datastore {
   }
 
   override def getAllTags(): List[Tag] = {
-    def _fromMapListToTagList(head: Map[String, Any],
-                              tailList: List[Map[String, Any]], accumulator: List[Tag]): List[Tag] = {
-      head.get("tag") match {
-        case Some(value) => {
-          tailList.size match {
-            case 0 => Tag(value.toString) :: accumulator
-            case _ => _fromMapListToTagList(tailList.head, tailList.tail, Tag(value.toString) :: accumulator)
-          }
-        }
-        case _ => throw new IllegalStateException
-      }
-    }
-    val result = db.executeQuery("select tag from tag_count")
-    result match {
-      case result if result.isEmpty => List()
-      case _ => _fromMapListToTagList(result.head, result.tail, List())
-    }
+    val results = db.executeQuery("select tag from tag_count")
+    for (each <- results if each.contains("tag")
+    ) yield Tag(each.get("tag").get.toString)
   }
 
 }
