@@ -1,9 +1,9 @@
 package learningci.chapter06
 
 import learningci.chapter06.datastore._
-
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
+
 class SqliteBasicClassifierSpec extends FlatSpec with ShouldMatchers {
 
   "Chapter 6.3 : after training 2 documents, 'quick' in 'good' " should "return 1.0" in {

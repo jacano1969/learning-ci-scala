@@ -1,12 +1,13 @@
 package learningci.chapter06.datastore
 
 import learningci.util.SqliteDatabase
-import collection.mutable.ListBuffer
 import learningci.chapter06._
 
-class SqliteDatastore extends Datastore {
+class SqliteDatastore(val db: SqliteDatabase) extends Datastore {
 
-  protected val db = new SqliteDatabase("./SqliteDatastore.db")
+  def this() = {
+    this (new SqliteDatabase("./SqliteDatastore.db"))
+  }
 
   override def addToTagCountForWords(word: Word,
                                      tag: Tag): Unit = {
@@ -77,17 +78,23 @@ class SqliteDatastore extends Datastore {
   }
 
   override def getAllTags(): List[Tag] = {
-    val buffer = new ListBuffer[Tag]
-    val result = db.executeQuery("select tag from tag_count")
-    result foreach {
-      each => {
-        each.get("tag") match {
-          case Some(value) => buffer.append(Tag(value.toString))
-          case _ =>
+    def _fromMapListToTagList(head: Map[String, Any],
+                              tailList: List[Map[String, Any]], accumulator: List[Tag]): List[Tag] = {
+      head.get("tag") match {
+        case Some(value) => {
+          tailList.size match {
+            case 0 => Tag(value.toString) :: accumulator
+            case _ => _fromMapListToTagList(tailList.head, tailList.tail, Tag(value.toString) :: accumulator)
+          }
         }
+        case _ => throw new IllegalStateException
       }
     }
-    buffer.toList
+    val result = db.executeQuery("select tag from tag_count")
+    result match {
+      case result if result.isEmpty => List()
+      case _ => _fromMapListToTagList(result.head, result.tail, List())
+    }
   }
 
 }
