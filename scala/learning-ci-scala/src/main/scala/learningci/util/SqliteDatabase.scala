@@ -3,6 +3,10 @@ package learningci.util
 import java.sql._
 import collection.mutable.{ListBuffer, HashMap}
 
+/**
+ * Sqlite database client
+ * Depends on sqlite-jdbc (http://www.xerial.org/maven/repository/artifact/org/xerial/sqlite-jdbc/3.7.2/)
+ */
 class SqliteDatabase(val file: String) {
 
   lazy val conn: Connection = {
