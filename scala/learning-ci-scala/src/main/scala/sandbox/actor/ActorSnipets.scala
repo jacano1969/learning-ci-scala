@@ -2,7 +2,6 @@ package sandbox.actor
 
 import actors.Actor
 import actors.Actor._
-import java.util.Date
 
 object FirstActorSample extends Application {
   val robert = new Redford
@@ -83,4 +82,15 @@ object MailBoxSample extends Application {
   Thread.sleep(1000L)
   System.exit(0)
 
+}
+
+import concurrent.ops.spawn
+
+object SpawnExample extends Application {
+  println("this will run synchronously")
+  spawn {
+    Thread.sleep(100L)
+    println("this will run asynchronously")
+  }
+  println("earlier than spawn block?")
 }
