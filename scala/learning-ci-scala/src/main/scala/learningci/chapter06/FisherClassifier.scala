@@ -9,17 +9,17 @@ class FisherClassifier(override val datastore: Datastore) extends AbstractClassi
     this (new InMemoryDatastore)
   }
 
-  private val tagMimimumValueMap = new HashMap[JudgeTag, Double]
+  private val tagMimimumValueMap = new HashMap[Tag, Double]
 
-  def getMinimumValue(tag: JudgeTag): Double = {
+  def getMinimumValue(tag: Tag): Double = {
     tagMimimumValueMap.getOrElse(tag, 0.0D)
   }
 
-  def setMinimumValue(tag: JudgeTag, minimumValue: Double): Unit = {
+  def setMinimumValue(tag: Tag, minimumValue: Double): Unit = {
     tagMimimumValueMap.update(tag, minimumValue)
   }
 
-  override def getTagProbabilityForWord(word: Word, tag: JudgeTag): Double = {
+  override def getTagProbabilityForWord(word: Word, tag: Tag): Double = {
     val wordProb = super.getTagProbabilityForWord(word, tag)
     wordProb match {
       case 0.0D => 0.0D
@@ -33,7 +33,7 @@ class FisherClassifier(override val datastore: Datastore) extends AbstractClassi
     }
   }
 
-  def getFisherProbability(document: Document, tag: JudgeTag): Double = {
+  def getFisherProbability(document: Document, tag: Tag): Double = {
     var prob = 1.0D
     val words = getDistinctWords(document)
     words foreach {
@@ -55,7 +55,7 @@ class FisherClassifier(override val datastore: Datastore) extends AbstractClassi
   }
 
   override def getClassifiedTag(document: Document,
-                                default: JudgeTag = JudgeTag.Unknown): JudgeTag = {
+                                default: Tag = JudgeTag.Unknown): Tag = {
     var bestTag = default
     var maxValue = 0.0D
     datastore.getAllTags foreach {

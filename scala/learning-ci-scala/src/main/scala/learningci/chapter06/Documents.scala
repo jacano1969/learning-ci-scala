@@ -1,7 +1,7 @@
 package learningci.chapter06
 
 object Documents {
-  def all(): Map[Document, JudgeTag] = {
+  def all(): Map[Document, Tag] = {
     Map(
       Document("Nobody owns the water") -> JudgeTag.Good
       , Document("the quick rabbit jumps fences") -> JudgeTag.Good
@@ -16,16 +16,16 @@ case class Document(val value: String)
 
 case class Word(val value: String)
 
-case class JudgeTag(val value: String)
+case class Tag(val value: String)
 
 object JudgeTag {
-  val Good = JudgeTag("good")
-  val Bad = JudgeTag("bad")
-  val Unknown = JudgeTag("unknown")
+  val Good = Tag("good")
+  val Bad = Tag("bad")
+  val Unknown = Tag("unknown")
 }
 
 object PythonTag {
-  val Snake = JudgeTag("snake")
-  val Programming = JudgeTag("programming")
-  val Monty = JudgeTag("monty")
+  val Snake = Tag("snake")
+  val Programming = Tag("programming")
+  val Monty = Tag("monty")
 }

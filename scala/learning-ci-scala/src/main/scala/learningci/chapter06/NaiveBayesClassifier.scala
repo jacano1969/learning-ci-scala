@@ -9,19 +9,19 @@ class NaiveBayesClassifier(override val datastore: Datastore) extends AbstractCl
     this (new InMemoryDatastore)
   }
 
-  private val tagThresholdMap = new HashMap[JudgeTag, Double]
+  private val tagThresholdMap = new HashMap[Tag, Double]
 
   private val ThresholdDefaultValue = 1.0D
 
-  def getThreshold(tag: JudgeTag): Double = {
+  def getThreshold(tag: Tag): Double = {
     tagThresholdMap.getOrElse(tag, ThresholdDefaultValue)
   }
 
-  def setThreshold(tag: JudgeTag, threshold: Double): Unit = {
+  def setThreshold(tag: Tag, threshold: Double): Unit = {
     tagThresholdMap.update(tag, threshold)
   }
 
-  def getBasicProbabilityForDocument(document: Document, tag: JudgeTag): Double = {
+  def getBasicProbabilityForDocument(document: Document, tag: Tag): Double = {
     val words = getDistinctWords(document)
     var probability = 1.0D
     words foreach {
@@ -30,14 +30,14 @@ class NaiveBayesClassifier(override val datastore: Datastore) extends AbstractCl
     probability
   }
 
-  override def getTagProbabilityForDocument(document: Document, tag: JudgeTag): Double = {
+  override def getTagProbabilityForDocument(document: Document, tag: Tag): Double = {
     val basicProb = getBasicProbabilityForDocument(document, tag)
     (datastore.getCountPerTag(tag) / datastore.getSumOfTagCounts) * basicProb
   }
 
   override def getClassifiedTag(document: Document,
-                                default: JudgeTag = JudgeTag.Unknown): JudgeTag = {
-    val tagProbMap = new HashMap[JudgeTag, Double]
+                                default: Tag = JudgeTag.Unknown): Tag = {
+    val tagProbMap = new HashMap[Tag, Double]
     var maxValue = 0.0D
     var bestTag = default
     datastore.getAllTags foreach {
