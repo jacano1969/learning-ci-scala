@@ -5,26 +5,26 @@ import learningci.chapter06._
 
 class InMemoryDatastore extends Datastore {
 
-  protected val tagCountForWordsMap = new HashMap[Word, HashMap[Tag, Int]]
+  protected val tagCountForWordsMap = new HashMap[Word, HashMap[JudgeTag, Int]]
 
-  protected val tagCountMap = new HashMap[Tag, Int]
+  protected val tagCountMap = new HashMap[JudgeTag, Int]
 
   override def addToTagCountForWords(word: Word,
-                                     tag: Tag): Unit = {
+                                     tag: JudgeTag): Unit = {
     val eachTagCountMap = tagCountForWordsMap.get(word) match {
       case Some(alreadyExists) => alreadyExists
-      case _ => new HashMap[Tag, Int]
+      case _ => new HashMap[JudgeTag, Int]
     }
     eachTagCountMap.update(tag, eachTagCountMap.getOrElse(tag, 0) + 1)
     tagCountForWordsMap.update(word, eachTagCountMap)
   }
 
-  override def addToTagCount(tag: Tag): Unit = {
+  override def addToTagCount(tag: JudgeTag): Unit = {
     tagCountMap.update(tag, tagCountMap.getOrElse(tag, 0) + 1)
   }
 
   override def getWordCountPerTag(word: Word,
-                                  tag: Tag): Double = {
+                                  tag: JudgeTag): Double = {
     if (tagCountForWordsMap.contains(word) && tagCountMap.contains(tag)) {
       tagCountForWordsMap.get(word) match {
         case Some(tagCountForTheWord) => tagCountForTheWord.get(tag) match {
@@ -36,7 +36,7 @@ class InMemoryDatastore extends Datastore {
     } else 0.0D
   }
 
-  override def getCountPerTag(tag: Tag): Double = {
+  override def getCountPerTag(tag: JudgeTag): Double = {
     if (tagCountMap.contains(tag)) {
       tagCountMap.get(tag) match {
         case Some(value) => value.toDouble
@@ -49,7 +49,7 @@ class InMemoryDatastore extends Datastore {
     tagCountMap.values.sum
   }
 
-  override def getAllTags(): List[Tag] = {
+  override def getAllTags(): List[JudgeTag] = {
     tagCountMap.keys.toList
   }
 

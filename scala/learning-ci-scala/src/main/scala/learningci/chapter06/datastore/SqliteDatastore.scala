@@ -10,7 +10,7 @@ class SqliteDatastore(val db: SqliteDatabase) extends Datastore {
   }
 
   override def addToTagCountForWords(word: Word,
-                                     tag: Tag): Unit = {
+                                     tag: JudgeTag): Unit = {
     val result = db.executeQuery(
       "select word,tag,count from tag_count_for_words where word = ? and tag = ?;",
       List(word.value, tag.value))
@@ -27,7 +27,7 @@ class SqliteDatastore(val db: SqliteDatabase) extends Datastore {
     }
   }
 
-  override def addToTagCount(tag: Tag): Unit = {
+  override def addToTagCount(tag: JudgeTag): Unit = {
     val result = db.executeQuery(
       "select tag,count from tag_count where tag = ?;",
       List(tag.value))
@@ -45,7 +45,7 @@ class SqliteDatastore(val db: SqliteDatabase) extends Datastore {
   }
 
   override def getWordCountPerTag(word: Word,
-                                  tag: Tag): Double = {
+                                  tag: JudgeTag): Double = {
     val result = db.executeQuery(
       "select word,tag,count from tag_count_for_words where word = ? and tag = ?",
       List(word.value, tag.value)
@@ -57,7 +57,7 @@ class SqliteDatastore(val db: SqliteDatabase) extends Datastore {
     }
   }
 
-  override def getCountPerTag(tag: Tag): Double = {
+  override def getCountPerTag(tag: JudgeTag): Double = {
     val result = db.executeQuery(
       "select tag,count from tag_count where tag = ?",
       List(tag.value)
@@ -77,10 +77,10 @@ class SqliteDatastore(val db: SqliteDatabase) extends Datastore {
     }
   }
 
-  override def getAllTags(): List[Tag] = {
+  override def getAllTags(): List[JudgeTag] = {
     val results = db.executeQuery("select tag from tag_count")
     for (each <- results if each.contains("tag")
-    ) yield Tag(each.get("tag").get.toString)
+    ) yield JudgeTag(each.get("tag").get.toString)
   }
 
 }

@@ -4,16 +4,16 @@ import learningci.chapter06._
 
 trait Datastore {
 
-  def addToTagCountForWords(word: Word, tag: Tag): Unit
+  def addToTagCountForWords(word: Word, tag: JudgeTag): Unit
 
-  def addToTagCount(tag: Tag): Unit
+  def addToTagCount(tag: JudgeTag): Unit
 
-  def getWordCountPerTag(word: Word, tag: Tag): Double
+  def getWordCountPerTag(word: Word, tag: JudgeTag): Double
 
-  def getCountPerTag(tag: Tag): Double
+  def getCountPerTag(tag: JudgeTag): Double
 
   def getSumOfTagCounts(): Double
 
-  def getAllTags(): List[Tag]
+  def getAllTags(): List[JudgeTag]
 
 }

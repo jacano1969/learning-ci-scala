@@ -6,9 +6,13 @@ object DatabaseTool {
 
   var filename = "./SqliteDatastore.db"
 
-  val db = new SqliteDatabase(filename)
+  var _db = new SqliteDatabase(filename)
 
-  def getDatabase() = db
+  def db() = this._db
+
+  def db_=(newDb: SqliteDatabase) = {
+    this._db = newDb
+  }
 
   def initialize() = {
     db.executeUpdate("drop table if exists tag_count_for_words;")

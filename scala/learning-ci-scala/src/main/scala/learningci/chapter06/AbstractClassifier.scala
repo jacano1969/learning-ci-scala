@@ -17,7 +17,7 @@ abstract class AbstractClassifier(val datastore: Datastore) extends Classifier {
     }
   }
 
-  override def getTagProbabilityForWord(word: Word, tag: Tag): Double = {
+  override def getTagProbabilityForWord(word: Word, tag: JudgeTag): Double = {
     val countPerTag = datastore.getCountPerTag(tag)
     countPerTag match {
       case 0.0D => 0.0D
@@ -25,16 +25,16 @@ abstract class AbstractClassifier(val datastore: Datastore) extends Classifier {
     }
   }
 
-  override def getTagProbabilityForDocument(document: Document, tag: Tag): Double = {
+  override def getTagProbabilityForDocument(document: Document, tag: JudgeTag): Double = {
     throw new UnsupportedOperationException
   }
 
-  override def getClassifiedTag(document: Document, default: Tag): Tag = {
+  override def getClassifiedTag(document: Document, default: JudgeTag): JudgeTag = {
     throw new UnsupportedOperationException
   }
 
   override def train(document: Document,
-                     tag: Tag): Unit = {
+                     tag: JudgeTag): Unit = {
     val words = getDistinctWords(document)
     words foreach {
       word => datastore.addToTagCountForWords(word, tag)
@@ -43,7 +43,7 @@ abstract class AbstractClassifier(val datastore: Datastore) extends Classifier {
   }
 
   override def getWeightedWordProbability(word: Word,
-                                          tag: Tag,
+                                          tag: JudgeTag,
                                           weight: Double = 1.0D,
                                           assumedProbability: Double = 0.5D): Double = {
     val basicProbability = getTagProbabilityForWord(word, tag)
