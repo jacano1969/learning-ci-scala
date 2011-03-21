@@ -3,10 +3,10 @@
 module Chapter02
 
   module NameHolder
-    attr_reader:name 
     def initialize(name)
       @name = name
     end 
+    attr_reader :name 
     def to_s() @name end
   end
 
@@ -34,14 +34,12 @@ module Chapter02
   end
 
   class Critic
-    attr_reader:person
-    attr_reader:movie
-    attr_reader:rating
     def initialize(person,movie,rating)
       @person = person
       @movie = movie
       @rating = rating
     end
+    attr_reader :person, :movie, :rating
     def to_s() 
       "(" + @person.to_s + "," + @movie.to_s + "," + @rating.to_s + ")"
     end

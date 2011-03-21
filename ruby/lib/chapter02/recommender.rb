@@ -6,24 +6,22 @@ require 'ostruct'
 module Chapter02
 
   class RecommendedMovie
-    attr_reader:movie
-    attr_reader:similarity
     def initialize(movie,similarity)
       @movie = movie
       @similarity = similarity
     end
+    attr_reader :movie, :similarity
     def to_s() 
       "(" + @movie.to_s + "," + @similarity.to_s + ")"
     end
   end
 
   class RecommendedPerson
-    attr_reader:person
-    attr_reader:similarity
     def initialize(person, similarity)
       @person = person
       @similarity = similarity
     end
+    attr_reader :person, :similarity
     def to_s() 
       "(" + @person.to_s + "," + @similarity.to_s + ")"
     end
