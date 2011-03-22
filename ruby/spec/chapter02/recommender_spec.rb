@@ -1,6 +1,8 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require File.dirname(__FILE__) + '/../../lib/chapter02/recommender.rb'
+
+require 'rubygems'
 require 'rspec'
 
 describe Chapter02::EuclideanDistanceRecommender, "EuclideanDistanceRecommender" do

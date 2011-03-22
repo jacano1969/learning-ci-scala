@@ -1,4 +1,4 @@
-#!/usr/bin/ruby
+#!/usr/bin/env ruby
 
 require File.dirname(__FILE__) + '/critics.rb'
 require 'ostruct'
@@ -34,7 +34,7 @@ module Chapter02
     end
 
     def get_similar_persons(critics, person_self, max_count) 
-      persons_but_self = critics.select { |c| c.person != person_self }
+      persons_but_self = critics.select { |c| c.person != person_self } \
                                 .map { |c| c.person }.uniq
       persons_but_self.map { |person|
         RecommendedPerson.new(
@@ -47,7 +47,7 @@ module Chapter02
     end
 
     def get_recommendations(critics, person_self)
-      persons_but_self = critics.select { |c| c.person != person_self }
+      persons_but_self = critics.select { |c| c.person != person_self } \
                                 .map { |c| c.person }.uniq
       persons_with_similarity = persons_but_self.map { |person| 
         OpenStruct.new({
