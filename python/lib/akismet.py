@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 __version__ = "0.3"
 __date__ = "2005-12-01"

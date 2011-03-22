@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 LadyInTheWater = 'Lady in the Water'
 SnakesOnAPlane = 'Snakes on a Plane'
