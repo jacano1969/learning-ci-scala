@@ -28,7 +28,7 @@ trait Recommender {
         case Critic(person, _, _) => person
       } filter (_ != self) distinct
 
-    val similarPersons: List[Tuple2[Person, Double]] =
+    val personsAndSimilarities: List[Tuple2[Person, Double]] =
       personsButSelf map {
         case person => (person, getSimilarity(critics, self, person))
       }
@@ -43,11 +43,11 @@ trait Recommender {
     critics foreach {
       case Critic(person, movie, rating) => {
         criticsBySelf filter {
-          case Critic(_, m, _) => m == movie
+          case Critic(_, movieBySelf, _) => movieBySelf == movie
         } size match {
           case 0 => {
-            val personAndSimilarity = similarPersons filter {
-              case (p, _) => p == person
+            val personAndSimilarity = personsAndSimilarities filter {
+              case (personThatHasSimilarity, _) => personThatHasSimilarity == person
             } head
             val similarity = personAndSimilarity._2
             weightedCritics.update(movie, weightedCritics.getOrElse(movie, 0.0D) + rating * similarity)
@@ -58,16 +58,18 @@ trait Recommender {
       }
     }
 
-    val buffer = new ListBuffer[Tuple2[Movie, Double]]()
+    val listBuffer = new ListBuffer[Tuple2[Movie, Double]]()
     weightedCritics foreach {
       case (movie, weightedValue) => {
         sumsOfSimilarity.get(movie) match {
-          case Some(denominator) => buffer.append((movie, weightedValue / denominator))
+          case Some(similarityValueDenominator) => {
+            listBuffer.append((movie, weightedValue / similarityValueDenominator))
+          }
           case None =>
         }
       }
     }
-    buffer.toList sortWith (_._2 > _._2)
+    listBuffer.toList sortWith (_._2 > _._2)
   }
 
 }
